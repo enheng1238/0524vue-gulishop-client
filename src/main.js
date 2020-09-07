@@ -4,6 +4,11 @@ import App from '@/App'
 import Vue from 'vue'
 import router from '@/router'
 
+// import '@/api'  //加载api的 index.js 让其能够运行  只有index.js运行了  reqCategoryList()才能调用
+// import {reqCategoryList} from '@/api'
+// reqCategoryList()
+import {reqCategoryList} from '@/api'
+reqCategoryList()
 
 Vue.config.productionTip = false 
 

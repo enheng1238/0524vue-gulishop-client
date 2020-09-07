@@ -31,7 +31,7 @@ instance.interceptors.response.use(response => {
   }, error=> {
     NProgress.done();
 // * 4.统一处理请求错误,具体请求也可以选择处理或不处理
-    alert('发送ajax请求失败'+ error.message|| '未知错误')
+    alert('发送ajax请求失败'+ error.message|| '未知错误');
     // 错误了之后可以选择今后可以继续处理这个错误,也可以选择今后不能处理这个错误
     // 如果不想让他进行处理 return 有个pending 状态的promise 中断 promise链
     return new Promise(()=>{});
