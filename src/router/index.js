@@ -36,7 +36,7 @@ export default new VueRouter({
             
         },
         {
-            path:'search',
+            path:'/search',
             component:Search
         },
         { //重定向路由
