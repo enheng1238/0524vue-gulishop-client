@@ -5,7 +5,12 @@ import Vue from 'vue'
 import router from '@/router'
 
 
-Vue.config.productionTip = false  
+Vue.config.productionTip = false 
+
+// 全局注册各种组件,因为很多地方用到
+import TypeNav from '@/components/TypeNav'
+
+Vue.component('TypeNav',TypeNav);
 
 new Vue({
   el:"#app",
