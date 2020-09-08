@@ -18,7 +18,7 @@ instance.interceptors.request.use(config => {
     // 一个函数就是一个功能
     // 1.可以在请求时添加功能
     NProgress.start();//添加进度条功能
-    return config;//请求拦截器最后一定要把config返回去
+    return config;//请求拦截器最后一定要把config返回去  config 是请求报文
   }, error=> {
    
     return Promise.reject(error);

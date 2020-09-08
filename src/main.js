@@ -8,6 +8,8 @@ import router from '@/router'
 // import {reqCategoryList} from '@/api'
 // reqCategoryList()
 import {reqCategoryList} from '@/api'
+import store from '@/store'
+
 reqCategoryList()
 
 Vue.config.productionTip = false 
@@ -21,7 +23,8 @@ new Vue({
   el:"#app",
   // render 渲染
   render:h=>h(App),
-  router:router  //让所有的组件当中都可以多两个对象 $ router 路由器对象  $route 路由对象
+  router:router,  //让所有的组件当中都可以多两个对象 $ router 路由器对象  $route 路由对象
+  store //
   // components:{
   //   App:App
   // },
