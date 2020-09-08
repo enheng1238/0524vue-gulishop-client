@@ -1864,7 +1864,7 @@ export default {
 
                                     dd {
                                         float: left;
-                                        width: 415px;
+                                        width: 615px;
                                         padding: 3px 0 0;
                                         overflow: hidden;
 
@@ -1882,6 +1882,7 @@ export default {
                         }
 
                         &:hover {
+                            background-color: hotpink;
                             .item-list {
                                 display: block;
                             }
