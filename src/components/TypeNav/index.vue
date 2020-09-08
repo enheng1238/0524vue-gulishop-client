@@ -15,9 +15,9 @@
                 </nav>
                 <div class="sort">
                     <div class="all-sort-list2">
-                        <div class="item bo">
+                        <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
                             <h3>
-                                <a href="">图书、音像、数字商品</a>
+                                <a href="">{{c1.categoryName}}</a>
                             </h3>
                             <div class="item-list clearfix">
                                 <div class="subitem">
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item">
+                        <!-- <div class="item">
                             <h3>
                                 <a href="">家用电器</a>
                             </h3>
@@ -1685,7 +1685,7 @@
                             <h3>
                                 <a href="">箱包</a>
                             </h3>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
