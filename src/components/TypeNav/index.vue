@@ -21,22 +21,13 @@
                             </h3>
                             <div class="item-list clearfix">
                                 <div class="subitem">
-                                    <dl class="fore">
+                                    <dl class="fore" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
                                         <dt>
-                                            <a href="">电子书</a>
+                                            <a href="">{{c2.categoryName}}</a>
                                         </dt>
                                         <dd>
-                                            <em>
-                                                <a href="">婚恋/两性</a>
-                                            </em>
-                                            <em>
-                                                <a href="">文学</a>
-                                            </em>
-                                            <em>
-                                                <a href="">经管</a>
-                                            </em>
-                                            <em>
-                                                <a href="">畅读VIP</a>
+                                            <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
+                                                <a href="">{{c3.categoryName}}</a>
                                             </em>
                                         </dd>
                                     </dl>
