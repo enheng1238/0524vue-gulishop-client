@@ -1693,17 +1693,89 @@
 </template>
 
 <script>
+import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
+
 export default {
     name:"TypeNav",
     mounted() {
         // 模板挂载完成后  模板变为真正的 dom 后
         this.getCategoryList() 
     },
-    methods: {
+    methods: {//这里边可以获取vuex当中mutations和actions方法
         getCategoryList() {
             // 用户在触发响应的actions去发请求拿数据
             this.$store.dispatch('getCategoryList')//dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
         }
+        
+        
+    },
+    computed: {//计算属性 ---- 捞数据 
+        // 可以去拿vuex当中的 state数据及getters当中的数据
+        /*
+        // 1.最原始的写法
+        // 假设我们目前没有使用vuex的模块化开发,categoryList存在总的store的state当中
+        // 拿数据 --- 本质  比较复杂
+        categoryList(){
+            return this.$store.state.categoryList //直接从store当中获取这个数据就可以简写为数组
+        },
+        
+        count(){
+            return this.$store.state.count
+        }
+
+        */
+
+        // ...扩展运算符 拆包和打包
+        // 2. ...mapState只是对原始写法的一个简写
+        /*
+        //1)
+        ...mapState(['categoryList','count'])  //拿的名字和存储的名字一定要一致才能用
+        */
+        /*
+        //2)
+        ...mapState(['count']),
+        ...mapState({
+             category(){
+                 return this.$store.state.categoryList //直接从store当中获取这个数据就可以简写为数组
+            },
+        })
+        或
+        ...mapState({
+            category:state=>state.categoryList  拿的总的store当中state中的数据
+        })
+        */
+
+        /**
+         *    mapState 如果用到数组要求,名称必须和state当中名称一致才能正确映射,否则不行
+         *    如果想要用自己随意起的名称,那么就要用对象写法
+         *      在mapState当中允许你这个属性拿到它内部的参数state
+         */
+
+        /*
+        //  ...mapState(['categoryList','count']) //返回的对象就是上面的本质写法
+
+        {
+             categoryList(){
+                 return this.$store.state.categoryList //直接从store当中获取这个数据就可以简写为数组
+            },
+        
+            count(){
+                return this.$store.state.count
+            }
+        }
+    */
+       
+       /**
+        * 如果vuex使用了模块化开发,就没办法获取state数据使用数组了,必须使用对象
+        * ...mapState({
+        *   categoryList:state=>state.home.categoryList
+        * })
+        */
+    
+    ...mapState({
+        categoryList:state => state.home.categoryList
+    })
+
     },
 }
 </script>

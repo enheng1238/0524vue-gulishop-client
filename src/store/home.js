@@ -7,7 +7,7 @@ import {reqCategoryList} from '@/api'
 
 // 存数据的地方,多个属性的对象
 const state = {
-    reqCategoryList : [] //初始化存储的共享状态数据
+    CategoryList : [] //初始化存储的共享状态数据
 }
 
 // 直接修改数据的地,是多个方法的一个对象 方法当中不能出现 if for 异步操作
