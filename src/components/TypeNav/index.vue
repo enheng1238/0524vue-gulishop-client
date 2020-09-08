@@ -2,20 +2,16 @@
     <!-- 商品分类导航 -->
         <div class="type-nav">
             <div class="container">
-                <h2 class="all">全部商品分类</h2>
-                <nav class="nav">
-                    <a href="###">服装城</a>
-                    <a href="###">美妆馆</a>
-                    <a href="###">尚品汇超市</a>
-                    <a href="###">全球购</a>
-                    <a href="###">闪购</a>
-                    <a href="###">团购</a>
-                    <a href="###">有趣</a>
-                    <a href="###">秒杀</a>
-                </nav>
-                <div class="sort">
+
+                <div @mouseleave="currentIndex = -1">
+                     <h2 class="all">全部商品分类</h2>
+                        <!-- 里边用的定位 -->
+                       <div class="sort">
                     <div class="all-sort-list2">
-                        <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
+                        <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId" 
+                        :class="{item_on:currentIndex === index}"
+                         @mouseenter="currentIndex = index">
+                         <!-- 移入哪一个一级分类就把哪一个下标赋值给 currentIndex 那么移入的这个下标一定和currentInedex相等 其余不等 -->
                             <h3>
                                 <a href="">{{c1.categoryName}}</a>
                             </h3>
@@ -1679,6 +1675,19 @@
                         </div> -->
                     </div>
                 </div>
+                </div>
+               
+                <nav class="nav">
+                    <a href="###">服装城</a>
+                    <a href="###">美妆馆</a>
+                    <a href="###">尚品汇超市</a>
+                    <a href="###">全球购</a>
+                    <a href="###">闪购</a>
+                    <a href="###">团购</a>
+                    <a href="###">有趣</a>
+                    <a href="###">秒杀</a>
+                </nav>
+              
             </div>
         </div>
 </template>
@@ -1688,6 +1697,11 @@ import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
 
 export default {
     name:"TypeNav",
+    data() {
+        return {
+            currentIndex:-1
+        }
+    },
     mounted() {
         // 模板挂载完成后  模板变为真正的 dom 后
         this.getCategoryList() 
@@ -1864,7 +1878,7 @@ export default {
 
                                     dd {
                                         float: left;
-                                        width: 615px;
+                                        width: 6git15px;
                                         padding: 3px 0 0;
                                         overflow: hidden;
 
@@ -1881,7 +1895,7 @@ export default {
                             }
                         }
 
-                        &:hover {
+                        &.item_on {
                             background-color: hotpink;
                             .item-list {
                                 display: block;
