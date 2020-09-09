@@ -1726,7 +1726,8 @@ export default {
         moveIn:_.throttle(function(index){
             console.log(index);
             this.currentIndex = index;
-        }, 50)
+        }, 50,{'trailing': false})
+        // {'trailing': false} 不让函数在拖延之后执行,也就是在时间间隔内执行完这个函数,不写有可能最后一次拖延执行
         
     },
     computed: {//计算属性 ---- 捞数据 
