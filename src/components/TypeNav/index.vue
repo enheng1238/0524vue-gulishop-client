@@ -1696,7 +1696,8 @@
 
 <script>
 import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
-import  _ from 'lodash'//体积过大
+// import  _ from 'lodash'//体积过大
+import throttle from 'lodash/throttle'
 export default {
     name:"TypeNav",
     data() {
@@ -1723,7 +1724,14 @@ export default {
 
     //    节流函数效果的写法
        //把moveIn 函数放到_.throttle中
+       /*
         moveIn:_.throttle(function(index){
+            console.log(index);
+            this.currentIndex = index;
+        }, 50,{'trailing': false})
+        */
+
+        moveIn:throttle(function(index){
             console.log(index);
             this.currentIndex = index;
         }, 50,{'trailing': false})
