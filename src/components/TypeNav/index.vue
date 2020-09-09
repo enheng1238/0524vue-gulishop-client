@@ -10,7 +10,9 @@
                     <div class="all-sort-list2">
                         <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId" 
                         :class="{item_on:currentIndex === index}"
-                         @mouseenter="currentIndex = index">
+                        @mouseenter="moveIn(index)"
+                         >
+                          <!-- @mouseenter="currentIndex = index"  回调函数只有一行可以这么写 回调函数如果有多行就不能这么写了 -->
                          <!-- 移入哪一个一级分类就把哪一个下标赋值给 currentIndex 那么移入的这个下标一定和currentInedex相等 其余不等 -->
                             <h3>
                                 <a href="">{{c1.categoryName}}</a>
@@ -1694,7 +1696,7 @@
 
 <script>
 import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
-
+import  _ from 'lodash'//体积过大
 export default {
     name:"TypeNav",
     data() {
@@ -1710,8 +1712,21 @@ export default {
         getCategoryList() {
             // 用户在触发响应的actions去发请求拿数据
             this.$store.dispatch('getCategoryList')//dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
-        }
-        
+        },
+        // 需要节流的函数
+        /*
+          moveIn(index){
+            console.log(index);
+            this.currentIndex = index;
+        },
+        */
+
+    //    节流函数效果的写法
+       //把moveIn 函数放到_.throttle中
+        moveIn:_.throttle(function(index){
+            console.log(index);
+            this.currentIndex = index;
+        }, 50)
         
     },
     computed: {//计算属性 ---- 捞数据 
