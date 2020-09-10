@@ -1,38 +1,116 @@
 <template>
-    <!-- 商品分类导航 -->
-        <div class="type-nav">
-            <div class="container">
+  <!-- 商品分类导航 -->
+  <div class="type-nav">
+    <div class="container">
+      <div @mouseleave="currentIndex = -1">
+        <h2 class="all">全部商品分类</h2>
+        <!-- 里边用的定位 -->
+        <div class="sort">
+          <div class="all-sort-list2" @click="toSearch">
+            <!-- <div class="all-sort-list2"> -->
+            <div
+              class="item"
+              v-for="(c1, index) in categoryList"
+              :key="c1.categoryId"
+              :class="{item_on:currentIndex === index}"
+              @mouseenter="moveIn(index)"
+            >
+              <!-- @mouseenter="currentIndex = index"  回调函数只有一行可以这么写 回调函数如果有多行就不能这么写了 -->
+              <!-- 移入哪一个一级分类就把哪一个下标赋值给 currentIndex 那么移入的这个下标一定和currentInedex相等 其余不等 -->
+              <h3>
+                <!-- 字符串拼接 -->
+                <!-- 一旦前面加: "js表达式" --- 代表我要解析动态数据的区域 -->
+                <!--字符串 <router-link :to="'/search/?categoryName='+c1.categoryName+'&category1Id='+c1.categoryId"></router-link> 
+                                    因此我们不能使用声明式导航,而是采用编程式导航
+                -->
+                <!--ES6 <router-link :to="'/search/?categoryName=${c1.categoryName}&category1Id=${c1.categoryId}'"></router-link> -->
 
-                <div @mouseleave="currentIndex = -1">
-                     <h2 class="all">全部商品分类</h2>
-                        <!-- 里边用的定位 -->
-                       <div class="sort">
-                    <div class="all-sort-list2">
-                        <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId" 
-                        :class="{item_on:currentIndex === index}"
-                        @mouseenter="moveIn(index)"
-                         >
-                          <!-- @mouseenter="currentIndex = index"  回调函数只有一行可以这么写 回调函数如果有多行就不能这么写了 -->
-                         <!-- 移入哪一个一级分类就把哪一个下标赋值给 currentIndex 那么移入的这个下标一定和currentInedex相等 其余不等 -->
-                            <h3>
-                                <a href="">{{c1.categoryName}}</a>
-                            </h3>
-                            <div class="item-list clearfix">
-                                <div class="subitem">
-                                    <dl class="fore" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
-                                        <dt>
-                                            <a href="">{{c2.categoryName}}</a>
-                                        </dt>
-                                        <dd>
-                                            <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
-                                                <a href="">{{c3.categoryName}}</a>
-                                            </em>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="item">
+                <!-- 声明式导航  使用声明式导航 牵扯到使用组件标签 使用组件标签如果多了,组件对象会非常多,就会造成效率低下(内存占用厉害)-->
+                <!-- <router-link
+                    :to="{name:'search',query:{categoryName:c1.categoryName,category1Id:c1.categoryId}}"
+                >{{c1.categoryName}}</router-link>-->
+
+                <!-- 带参数建议使用对象形式 -->
+                <!-- 采用编程式导航 每个a标签都使用电击事件 又会导致,事件的回调函数太多 -->
+                <!-- 每个a标签都使用点击事件 效率仍然低下 采用事件委派更妥当 
+                    事件委派
+                    1.你怎么知道你点的是a
+                    2.就算你点的是a,你点的是几级的a
+                -->
+
+                <a
+                  href="javascript:;"
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                >{{c1.categoryName}}</a>
+
+                <!-- <a
+                  href="javascript:;"
+                  @click="$router.push({name:'search',query:{categoryName:c1.categoryName,category1Id:c1.categoryId}})"
+                >{{c1.categoryName}}</a>-->
+
+                <!-- <a
+                    href="javascript:;"
+                    :data-categoryName="c1.categoryName"
+                    :data-category1Id="c1.categoryId"
+                >{{c1.categoryName}}</a>-->
+                <!-- <a href="">{{c1.categoryName}}</a> -->
+              </h3>
+              <div class="item-list clearfix">
+                <div class="subitem">
+                  <dl class="fore" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
+                    <dt>
+                      <a
+                        href="javascript:;"
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                      >{{c2.categoryName}}</a>
+
+                      <!-- <router-link
+                          :to="{name:'search',query:{categoryName:c2.categoryName,category2Id:c2.categoryId}}"
+                      >{{c2.categoryName}}</router-link>-->
+                      <!-- <a href="">{{c2.categoryName}}</a> -->
+                      <!-- <a
+                        href="javascript:;"
+                        @click="$router.push({name:'search',query:{categoryName:c2.categoryName,category2Id:c2.categoryId}})"
+                      >{{c2.categoryName}}</a>-->
+
+                      <!-- 自定义属性 data- 直接可以通过data-set拿到属性 -->
+                      <!-- <a
+                    href="javascript:;"
+                    :data-categoryName="c2.categoryName"
+                    :data-category1Id="c2.categoryId"
+                      >{{c2.categoryName}}</a>-->
+                      <!-- <a href="">{{c2.categoryName}}</a> -->
+                    </dt>
+                    <dd>
+                      <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
+                        <a
+                          href="javascript:;"
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                        >{{c3.categoryName}}</a>
+
+                        <!-- <router-link
+                            :to="{name:'search',query:{categoryName:c3.categoryName,category3Id:c3.categoryId}}"
+                        >{{c3.categoryName}}</router-link>-->
+                        <!-- <a href="">{{c3.categoryName}}</a> -->
+                        <!-- <a
+                          href="javascript:;"
+                          @click="$router.push({name:'search',query:{categoryName:c3.categoryName,category3Id:c3.categoryId}})"
+                        >{{c3.categoryName}}</a>-->
+                        <!-- <a
+                    href="javascript:;"
+                    :data-categoryName="c3.categoryName"
+                    :data-category1Id="c3.categoryId"
+                        >{{c3.categoryName}}</a>-->
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="item">
                             <h3>
                                 <a href="">家用电器</a>
                             </h3>
@@ -1674,48 +1752,48 @@
                             <h3>
                                 <a href="">箱包</a>
                             </h3>
-                        </div> -->
-                    </div>
-                </div>
-                </div>
-               
-                <nav class="nav">
-                    <a href="###">服装城</a>
-                    <a href="###">美妆馆</a>
-                    <a href="###">尚品汇超市</a>
-                    <a href="###">全球购</a>
-                    <a href="###">闪购</a>
-                    <a href="###">团购</a>
-                    <a href="###">有趣</a>
-                    <a href="###">秒杀</a>
-                </nav>
-              
-            </div>
+            </div>-->
+          </div>
         </div>
+      </div>
+
+      <nav class="nav">
+        <a href="###">服装城</a>
+        <a href="###">美妆馆</a>
+        <a href="###">尚品汇超市</a>
+        <a href="###">全球购</a>
+        <a href="###">闪购</a>
+        <a href="###">团购</a>
+        <a href="###">有趣</a>
+        <a href="###">秒杀</a>
+      </nav>
+    </div>
+  </div>
 </template>
 
 <script>
-import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 // import  _ from 'lodash'//体积过大
-import throttle from 'lodash/throttle'
+import throttle from "lodash/throttle";
 export default {
-    name:"TypeNav",
-    data() {
-        return {
-            currentIndex:-1
-        }
+  name: "TypeNav",
+  data() {
+    return {
+      currentIndex: -1,
+    };
+  },
+  mounted() {
+    // 模板挂载完成后  模板变为真正的 dom 后
+    this.getCategoryList();
+  },
+  methods: {
+    //这里边可以获取vuex当中mutations和actions方法
+    getCategoryList() {
+      // 用户在触发响应的actions去发请求拿数据
+      this.$store.dispatch("getCategoryList"); //dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
     },
-    mounted() {
-        // 模板挂载完成后  模板变为真正的 dom 后
-        this.getCategoryList() 
-    },
-    methods: {//这里边可以获取vuex当中mutations和actions方法
-        getCategoryList() {
-            // 用户在触发响应的actions去发请求拿数据
-            this.$store.dispatch('getCategoryList')//dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
-        },
-        // 需要节流的函数
-        /*
+    // 需要节流的函数
+    /*
           moveIn(index){
             console.log(index);
             this.currentIndex = index;
@@ -1723,24 +1801,67 @@ export default {
         */
 
     //    节流函数效果的写法
-       //把moveIn 函数放到_.throttle中
-       /*
+    //把moveIn 函数放到_.throttle中
+    /*
         moveIn:_.throttle(function(index){
             console.log(index);
             this.currentIndex = index;
         }, 50,{'trailing': false})
         */
 
-        moveIn:throttle(function(index){
-            console.log(index);
-            this.currentIndex = index;
-        }, 50,{'trailing': false})
-        // {'trailing': false} 不让函数在拖延之后执行,也就是在时间间隔内执行完这个函数,不写有可能最后一次拖延执行
-        
+    moveIn: throttle(
+      function (index) {
+        console.log(index);
+        this.currentIndex = index;
+      },
+      50,
+      { trailing: false }
+    ),
+    // {'trailing': false} 不让函数在拖延之后执行,也就是在时间间隔内执行完这个函数,不写有可能最后一次拖延执行
+
+    toSearch(event) {
+      //event 事件对象 是浏览器
+      let target = event.target; //target代表目标元素
+      let data = target.dataset; //dataset拿的就是元素身上以data-开头的所有属性和值组成的元素
+    //   console.log("data=", data);
+      let { categoryname, category1id, category2id, category3id } = data;
+      if (categoryname) {
+        // 如果categoryname是存在的代表点的一定是a
+        //既然代表点的是a 那么一定会跳转所以我们创建跳转的对象
+        let location = {
+             name: "search",
+        };
+        // 创建query参数的对象,来收集整理query参数
+        let query = {
+          categoryName: categoryname,
+        };
+
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
+        } else {
+          query.category3Id = category3id;
+        }
+
+        // 把query参数放到location当中
+        location.query = query;
+
+        // 判断当前路由是不是又params参数,有就带上
+        // let { params } = this.$route;
+        // if (params) {
+        //   location.params = params;
+        // }
+
+        // console.log("location=", location);
+        this.$router.push(location);
+      }
     },
-    computed: {//计算属性 ---- 捞数据 
-        // 可以去拿vuex当中的 state数据及getters当中的数据
-        /*
+  },
+  computed: {
+    //计算属性 ---- 捞数据
+    // 可以去拿vuex当中的 state数据及getters当中的数据
+    /*
         // 1.最原始的写法
         // 假设我们目前没有使用vuex的模块化开发,categoryList存在总的store的state当中
         // 拿数据 --- 本质  比较复杂
@@ -1754,13 +1875,13 @@ export default {
 
         */
 
-        // ...扩展运算符 拆包和打包
-        // 2. ...mapState只是对原始写法的一个简写
-        /*
+    // ...扩展运算符 拆包和打包
+    // 2. ...mapState只是对原始写法的一个简写
+    /*
         //1)
         ...mapState(['categoryList','count'])  //拿的名字和存储的名字一定要一致才能用
         */
-        /*
+    /*
         //2)
         ...mapState(['count']),
         ...mapState({
@@ -1774,13 +1895,13 @@ export default {
         })
         */
 
-        /**
-         *    mapState 如果用到数组要求,名称必须和state当中名称一致才能正确映射,否则不行
-         *    如果想要用自己随意起的名称,那么就要用对象写法
-         *      在mapState当中允许你这个属性拿到它内部的参数state
-         */
+    /**
+     *    mapState 如果用到数组要求,名称必须和state当中名称一致才能正确映射,否则不行
+     *    如果想要用自己随意起的名称,那么就要用对象写法
+     *      在mapState当中允许你这个属性拿到它内部的参数state
+     */
 
-        /*
+    /*
         //  ...mapState(['categoryList','count']) //返回的对象就是上面的本质写法
 
         {
@@ -1793,141 +1914,140 @@ export default {
             }
         }
     */
-       
-       /**
-        * 如果vuex使用了模块化开发,就没办法获取state数据使用数组了,必须使用对象
-        * ...mapState({
-        *   categoryList:state=>state.home.categoryList
-        * })
-        */
-    
-    ...mapState({
-        categoryList:(state) => state.home.categoryList
-    })
 
-    },
-}
+    /**
+     * 如果vuex使用了模块化开发,就没办法获取state数据使用数组了,必须使用对象
+     * ...mapState({
+     *   categoryList:state=>state.home.categoryList
+     * })
+     */
+
+    ...mapState({
+      categoryList: (state) => state.home.categoryList,
+    }),
+  },
+};
 </script>
 
 <style lang="less" scoped>
-    .type-nav {
-        border-bottom: 2px solid #e1251b;
+.type-nav {
+  border-bottom: 2px solid #e1251b;
 
-        .container {
-            width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            position: relative;
+  .container {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    position: relative;
 
-            .all {
-                width: 210px;
-                height: 45px;
-                background-color: #e1251b;
-                line-height: 45px;
-                text-align: center;
-                color: #fff;
-                font-size: 14px;
-                font-weight: bold;
-            }
-
-            .nav {
-                a {
-                    height: 45px;
-                    margin: 0 22px;
-                    line-height: 45px;
-                    font-size: 16px;
-                    color: #333;
-                }
-            }
-
-            .sort {
-                position: absolute;
-                left: 0;
-                top: 45px;
-                width: 210px;
-                height: 461px;
-                position: absolute;
-                background: #fafafa;
-                z-index: 999;
-
-                .all-sort-list2 {
-                    .item {
-                        h3 {
-                            line-height: 30px;
-                            font-size: 14px;
-                            font-weight: 400;
-                            overflow: hidden;
-                            padding: 0 20px;
-                            margin: 0;
-
-                            a {
-                                color: #333;
-                            }
-                        }
-
-                        .item-list {
-                            display: none;
-                            position: absolute;
-                            width: 734px;
-                            min-height: 460px;
-                            background: #f7f7f7;
-                            left: 210px;
-                            border: 1px solid #ddd;
-                            top: 0;
-                            z-index: 9999 !important;
-
-                            .subitem {
-                                float: left;
-                                width: 650px;
-                                padding: 0 4px 0 8px;
-
-                                dl {
-                                    border-top: 1px solid #eee;
-                                    padding: 6px 0;
-                                    overflow: hidden;
-                                    zoom: 1;
-
-                                    &.fore {
-                                        border-top: 0;
-                                    }
-
-                                    dt {
-                                        float: left;
-                                        width: 54px;
-                                        line-height: 22px;
-                                        text-align: right;
-                                        padding: 3px 6px 0 0;
-                                        font-weight: 700;
-                                    }
-
-                                    dd {
-                                        float: left;
-                                        width: 6git15px;
-                                        padding: 3px 0 0;
-                                        overflow: hidden;
-
-                                        em {
-                                            float: left;
-                                            height: 14px;
-                                            line-height: 14px;
-                                            padding: 0 8px;
-                                            margin-top: 5px;
-                                            border-left: 1px solid #ccc;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        &.item_on {
-                            background-color: hotpink;
-                            .item-list {
-                                display: block;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    .all {
+      width: 210px;
+      height: 45px;
+      background-color: #e1251b;
+      line-height: 45px;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
     }
+
+    .nav {
+      a {
+        height: 45px;
+        margin: 0 22px;
+        line-height: 45px;
+        font-size: 16px;
+        color: #333;
+      }
+    }
+
+    .sort {
+      position: absolute;
+      left: 0;
+      top: 45px;
+      width: 210px;
+      height: 461px;
+      position: absolute;
+      background: #fafafa;
+      z-index: 999;
+
+      .all-sort-list2 {
+        .item {
+          h3 {
+            line-height: 30px;
+            font-size: 14px;
+            font-weight: 400;
+            overflow: hidden;
+            padding: 0 20px;
+            margin: 0;
+
+            a {
+              color: #333;
+            }
+          }
+
+          .item-list {
+            display: none;
+            position: absolute;
+            width: 734px;
+            min-height: 460px;
+            background: #f7f7f7;
+            left: 210px;
+            border: 1px solid #ddd;
+            top: 0;
+            z-index: 9999 !important;
+
+            .subitem {
+              float: left;
+              width: 650px;
+              padding: 0 4px 0 8px;
+
+              dl {
+                border-top: 1px solid #eee;
+                padding: 6px 0;
+                overflow: hidden;
+                zoom: 1;
+
+                &.fore {
+                  border-top: 0;
+                }
+
+                dt {
+                  float: left;
+                  width: 54px;
+                  line-height: 22px;
+                  text-align: right;
+                  padding: 3px 6px 0 0;
+                  font-weight: 700;
+                }
+
+                dd {
+                  float: left;
+                  width: 6git15px;
+                  padding: 3px 0 0;
+                  overflow: hidden;
+
+                  em {
+                    float: left;
+                    height: 14px;
+                    line-height: 14px;
+                    padding: 0 8px;
+                    margin-top: 5px;
+                    border-left: 1px solid #ccc;
+                  }
+                }
+              }
+            }
+          }
+
+          &.item_on {
+            background-color: hotpink;
+            .item-list {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>
