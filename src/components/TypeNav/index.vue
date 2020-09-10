@@ -2,7 +2,7 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="currentIndex = -1">
+      <div @mouseleave="currentIndex = -1" @mouseenter="moveInDiv">
         <h2 class="all">全部商品分类</h2>
         <!-- 里边用的定位 -->
         <div class="sort" v-show="isShow">
@@ -1823,6 +1823,12 @@ export default {
       { trailing: false }
     ),
     // {'trailing': false} 不让函数在拖延之后执行,也就是在时间间隔内执行完这个函数,不写有可能最后一次拖延执行
+
+    // 体乳到全部商品分类外部的div,显示二级分类列表
+    moveInDiv(){
+        this.isShow = true;
+    },
+
 
     toSearch(event) {
       //event 事件对象 是浏览器
