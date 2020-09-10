@@ -1871,10 +1871,10 @@ export default {
         location.query = query;
 
         // 判断当前路由是不是又params参数,有就带上
-        // let { params } = this.$route;
-        // if (params) {
-        //   location.params = params;
-        // }
+        let { params } = this.$route;
+        if (params) {
+          location.params = params;
+        }
 
         // console.log("location=", location);
         this.$router.push(location);

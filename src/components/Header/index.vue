@@ -91,10 +91,12 @@ export default {
       }
       console.log("location=",location);
       // 判断当前路由当中是不是有query参数,有就带上
-      // let {query} = thid.$route
-      // if(query){
-      //   location.query = query
-      // }
+      //  如果有query参数 证明先点击类别,然后再点击按钮
+      // 如果没有query参数,证明直接点击的按钮
+      let {query} = this.$route
+      if(query){
+        location.query = query
+      }
       this.$router.push(location);//路由器对象有push()和replace()
     }
   },
