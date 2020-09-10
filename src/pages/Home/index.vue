@@ -32,7 +32,15 @@ export default {
         Like,
         Floor,
         Brand
-    }
+    },
+    mounted() {
+        this.getFloorList()
+    },
+    methods: {
+        getFloorList(){
+            this.$store.dispatch('getFloorList')
+        }
+    },
 }
 </script>
 

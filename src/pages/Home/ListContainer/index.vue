@@ -113,6 +113,17 @@
 <script>
 export default {
   name: "ListContainer",
+  // 挂载完成后 发请求 发送异步请求 mounted
+  mounted() {
+    // 函数可以复用
+    this.getBannerList()
+  },
+  methods: {
+    getBannerList(){
+      this.$store.dispatch('getBannerList')
+    }
+    
+  },
 };
 </script>
 
