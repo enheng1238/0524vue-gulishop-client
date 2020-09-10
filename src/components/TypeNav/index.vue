@@ -2,7 +2,7 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="currentIndex = -1" @mouseenter="moveInDiv">
+      <div @mouseleave="moveOutDiv" @mouseenter="moveInDiv">
         <h2 class="all">全部商品分类</h2>
         <!-- 里边用的定位 -->
         <div class="sort" v-show="isShow">
@@ -1824,11 +1824,18 @@ export default {
     ),
     // {'trailing': false} 不让函数在拖延之后执行,也就是在时间间隔内执行完这个函数,不写有可能最后一次拖延执行
 
-    // 体乳到全部商品分类外部的div,显示二级分类列表
+    // 移入到全部商品分类外部的div,显示三级分类列表
     moveInDiv(){
         this.isShow = true;
     },
-
+    // 移出全部商品外部的div,隐藏search中的三级分类列表,home当中隐藏23级分类
+    moveOutDiv(){
+        this.currentIndex = -1;//目的为了隐藏二三级分类
+        // 判断是在home页还是在search页
+        if(this.$route.path !== '/home'){
+        this.isShow = false;//目的是为了隐藏search的全部分类
+    }
+    }, 
 
     toSearch(event) {
       //event 事件对象 是浏览器
