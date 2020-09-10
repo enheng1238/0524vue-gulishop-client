@@ -19,7 +19,17 @@ export default {
   components:{
     Header,
     Footer
-  }
+  },
+  mounted() {
+    // 请求数据 放在这里只需要发一次请求
+     this.getCategoryList();  
+  },
+  methods: {
+     getCategoryList() {
+      // 用户在触发响应的actions去发请求拿数据
+      this.$store.dispatch("getCategoryList"); //dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
+    },
+  },
 }
 </script>
 

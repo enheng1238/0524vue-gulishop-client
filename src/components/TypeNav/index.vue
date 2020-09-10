@@ -1791,14 +1791,17 @@ export default {
     if (this.$route.path !== "/home") {
       this.isShow = false;
     }
-    this.getCategoryList();
+
+    // 发送请求拿数据  放在这里会发多次请求,而且请求的数据是一样的 (home/search都会发 挪到app.vue中)
+    // this.getCategoryList();  
   },
   methods: {
     //这里边可以获取vuex当中mutations和actions方法
-    getCategoryList() {
-      // 用户在触发响应的actions去发请求拿数据
-      this.$store.dispatch("getCategoryList"); //dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
-    },
+    // 发请求的函数
+    // getCategoryList() {
+    //   // 用户在触发响应的actions去发请求拿数据
+    //   this.$store.dispatch("getCategoryList"); //dispatch 触发 actions --home当中的actions  ----后期合并到 store当中的actions
+    // },
     // 需要节流的函数
     /*
           moveIn(index){
