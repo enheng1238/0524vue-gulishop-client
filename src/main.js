@@ -9,6 +9,7 @@ import router from '@/router'
 // reqCategoryList()
 import {reqCategoryList} from '@/api'
 import store from '@/store'
+import '@/mock/mockServe' //运行mockServe文件 让mock可以注册为接口
 
 reqCategoryList()
 
