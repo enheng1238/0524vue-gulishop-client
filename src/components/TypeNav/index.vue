@@ -5,7 +5,7 @@
       <div @mouseleave="currentIndex = -1">
         <h2 class="all">全部商品分类</h2>
         <!-- 里边用的定位 -->
-        <div class="sort">
+        <div class="sort" v-show="isShow">
           <div class="all-sort-list2" @click="toSearch">
             <!-- <div class="all-sort-list2"> -->
             <div
@@ -1780,10 +1780,15 @@ export default {
   data() {
     return {
       currentIndex: -1,
+      isShow:true
     };
   },
   mounted() {
     // 模板挂载完成后  模板变为真正的 dom 后
+    // 通过路由判断路径 判断是在home页还是在search页  如果是search页 那么我们要首先隐藏掉三级分类
+    if(this.$route.path !== '/home'){
+        this.isShow = false
+    }
     this.getCategoryList();
   },
   methods: {
