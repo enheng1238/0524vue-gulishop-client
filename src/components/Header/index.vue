@@ -36,8 +36,9 @@
         </a>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
-          <input type="text" id="autocomplete" class="input-error input-xxlarge" />
+        <form action="###" class="searchForm"> 
+          <!-- v-model="keyword" 传参-->
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword"/>
           <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">搜索</button>
         </form>
       </div>
@@ -48,9 +49,53 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      // 收集 keyword
+      keyword:"",
+    }
+  },
   methods: {
     toSearch(){
-      this.$router.push('/search');//路由器对象有push()和replace()
+      // 1.字符串写法
+      // 2.对象写法
+      // this.$router.push('/search')
+      // this.$router.push({path:'/search'})
+
+      // 一、params参数不能和对象写法path配合？
+      // 不能配合,如果要配合只能和name配合使用
+      // 如果只传query参数,那么可以和path配合
+      // 如果传递的参数有params参数也有query参数,那么直接用name就可以,query也可以和nama配合
+
+      // 字符串写法没问题
+      // this.$router.push('/search/'+this.keyword)
+
+      // 错的 对象写法params必须和name进行配合使用
+      // this.$router.push({payj:'/search/',params:{keyword:this.keyword}})
+
+      // 对的
+      // this.$router.push({name:'search',params:{keyword:this.keyword}})
+
+      // 二、如果params参数有时候传,有时候不传,那么再路由配置的时候路径接收的参数后面添加 ?
+
+      // 三、params参数和name配合了,但是传递的是一个空串,那么路径也会出问题
+      // 解决：1.首先要配置可传可不传
+      // 2.传递参数的时候要么不写params,要么传递undefined替代
+      // this.$router.push({name:'search',params:{keyword:''||undefined}})
+
+      // 四、props的三种写法
+      let location ={
+        name:"search",
+        params:{keyword:this.keyword || undefined}
+        // query:{keyword2:this.keyword.toUpperCase()},
+      }
+      console.log("location=",location);
+      // 判断当前路由当中是不是有query参数,有就带上
+      // let {query} = thid.$route
+      // if(query){
+      //   location.query = query
+      // }
+      this.$router.push(location);//路由器对象有push()和replace()
     }
   },
 };
