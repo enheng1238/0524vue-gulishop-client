@@ -25,6 +25,14 @@ import Brand from './Brand'
 
 export default {
     name:"Home",
+    mounted() {
+        this.getBannerList()
+    },
+    methods: {
+        getBannerList(){
+            this.$store.dispatch('getBannerList')
+        }
+    },
     components:{
         ListContainer,
         Recommend,
@@ -32,15 +40,7 @@ export default {
         Like,
         Floor,
         Brand
-    },
-    mounted() {
-        this.getFloorList()
-    },
-    methods: {
-        getFloorList(){
-            this.$store.dispatch('getFloorList')
-        }
-    },
+    }
 }
 </script>
 
