@@ -4,7 +4,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(banner, index) in bannerList" :key="banner.id">
               <img :src="banner.imgUrl" />
@@ -17,6 +17,9 @@
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
         </div>
+
+  
+
       </div>
       <div class="right">
         <div class="news">
@@ -103,10 +106,33 @@
 
 <script>
 import { mapState } from 'vuex';
+import Swiper from 'swiper'
+import 'swiper/css/swiper.min.css'
+
 export default {
   name: "ListContainer",
   mounted() {
-    this.getBannerList()
+    this.getBannerList()//异步请求获取banner数据 发来请求数据不一定回来  代码先执行同步代码再执行一部代码
+    // 1.实例化swiper写在mounted当中,不能保证bannerList有数据,也就没法保证上面的轮播div结构形成
+    // 2.即使数据能保证回来,放在mounted当中也不能保证结构形成,因为上面dic通过for循环去创建也需要时间
+    setTimeout(()=>{
+            new Swiper ('.swiper-container', {
+    loop: true, // 循环模式选项
+    
+    // 如果需要分页器
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    
+    // 如果需要前进后退按钮
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    
+  })        
+ 
+    },3000)
   },
   methods: {
     getBannerList(){
