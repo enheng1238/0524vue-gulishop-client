@@ -17,9 +17,6 @@
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
         </div>
-
-  
-
       </div>
       <div class="right">
         <div class="news">
@@ -105,47 +102,85 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import Swiper from 'swiper'
-import 'swiper/css/swiper.min.css'
+import { mapState } from "vuex";
+import Swiper from "swiper";
+import "swiper/css/swiper.min.css";
 
 export default {
   name: "ListContainer",
   mounted() {
-    this.getBannerList()//异步请求获取banner数据 发来请求数据不一定回来  代码先执行同步代码再执行一部代码
+    this.getBannerList(); //异步请求获取banner数据 发来请求数据不一定回来  代码先执行同步代码再执行一部代码
     // 1.实例化swiper写在mounted当中,不能保证bannerList有数据,也就没法保证上面的轮播div结构形成
     // 2.即使数据能保证回来,放在mounted当中也不能保证结构形成,因为上面dic通过for循环去创建也需要时间
-    setTimeout(()=>{
-            new Swiper (this.$refs.bannerSwiper, {
-    loop: true, // 循环模式选项
-    
-    // 如果需要分页器
-    pagination: {
-      el: '.swiper-pagination',
-    },
-    
-    // 如果需要前进后退按钮
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    
-  })        
- 
-    },3000)
+    // 虽然说延时定时器可以解决这个问题，但是不好
+    // setTimeout(() => {
+    //   new Swiper(this.$refs.bannerSwiper, {
+    //     loop: true, // 循环模式选项
+
+    //     // 如果需要分页器
+    //     pagination: {
+    //       el: ".swiper-pagination",
+    //     },
+
+    //     // 如果需要前进后退按钮
+    //     navigation: {
+    //       nextEl: ".swiper-button-next",
+    //       prevEl: ".swiper-button-prev",
+    //     },
+    //   });
+    // }, 3000);
   },
   methods: {
-    getBannerList(){
-      this.$store.dispatch('getBannerList')
-    }
+    getBannerList() {
+      this.$store.dispatch("getBannerList");
+    },
   },
   computed: {
-      // 不能用数组 因为bannerList不在总督store的state里边 ,只有在总的store的state里边才能用数组
-    ...mapState({//不能用[] 不在总的store的state里边
-        bannerList : state => state.home.bannerList
-
-    })
+    // 不能用数组 因为bannerList不在总督store的state里边 ,只有在总的store的state里边才能用数组
+    ...mapState({
+      //不能用[] 不在总的store的state里边
+      bannerList: (state) => state.home.bannerList,
+    }),
   },
+  // watch 监视  有数据用监视(数据一定存在 但是值可能变化) 干其他的事
+  // computed 计算 根据已有的数据计算出来想要的没有的数据
+  // 一般监视  只能监视数组本身数据的改变 监视不到数组当中对象的属性值的变化
+  watch: {
+    // 监视：一般监视和深度监视  
+    // 监视哪个数据变化之后所执行的函数
+    // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成
+    bannerList :{
+      handler(){
+        //监视哪个数据变化之后所执行的函数
+          new Swiper(this.$refs.bannerSwiper, {
+        loop: true, // 循环模式选项
+
+        // 如果需要分页器
+        pagination: {
+          el: ".swiper-pagination",
+        },
+
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+      }
+    }
+  },
+
+  // 深度监视 能监视到数组当中对象的属性值的变化
+  //  watch: {
+  //   // 监视：一般监视和深度监视
+  //   bannerList :{
+  //     deep:true,
+  //     handler(){
+  //       //监视哪个数据变化之后所执行的函数
+  //     }
+  //   }
+  // },
+
 };
 </script>
 
