@@ -6,8 +6,8 @@
         <Rank></Rank>
         <!-- <Rank></Rank> -->
         <Like></Like>
-        <Floor></Floor>
-        <Floor></Floor>
+        <Floor v-for="(floor,index) in floorList" :key="floor.id" :floor="floor"></Floor>
+        <!-- <Floor></Floor> -->
         <!-- 需要用v-for遍历的 -->
         <Brand></Brand>
     </div>
