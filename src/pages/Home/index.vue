@@ -8,6 +8,7 @@
         <Like></Like>
         <Floor></Floor>
         <Floor></Floor>
+        <!-- 需要用v-for遍历的 -->
         <Brand></Brand>
     </div>
 </template>
@@ -27,10 +28,14 @@ export default {
     name:"Home",
     mounted() {
         this.getBannerList()
+        this.getFloorList()
     },
     methods: {
         getBannerList(){
             this.$store.dispatch('getBannerList')
+        },
+        getFloorList(){
+             this.$store.dispatch('getFloorList')
         }
     },
     components:{
