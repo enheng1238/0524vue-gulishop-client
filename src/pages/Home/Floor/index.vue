@@ -24,7 +24,7 @@
               <img :src="floor.imgUrl" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" id="floor1Swiper">
+              <div class="swiper-container" ref="floorSwiper">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide" v-for="(carousel,index) in floor.carouselList" :key="carousel.id">
                     <img :src="carousel.imgUrl" />
@@ -68,9 +68,62 @@
 </template>
 
 <script>
+import Swiper from "swiper";
+import "swiper/css/swiper.min.css";
 export default {
   name: "Floor",
-  props:['floor'] //接收的是属性  声明接收属性  []表示一次可以接受多个属性
+  props:['floor'] ,//接收的是属性  声明接收属性  []表示一次可以接受多个属性
+  mounted() {
+    // 为啥 floor 就能直接在mounted当中实例化我们的swiper,因为iswiper在实例化的时候
+    // floor当中的结构已经完成形成,原因是floor当中没有发请求拿数据的过程,而是数据本身就已经存在
+       new Swiper(this.$refs.floorSwiper, {
+        loop: true, // 循环模式选项
+
+        // 如果需要分页器
+        pagination: {
+          el: ".swiper-pagination",
+        },
+
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+
+  
+  },
+
+  //  watch: {
+  //   // 监视：一般监视和深度监视
+  //   // 监视哪个数据变化之后所执行的函数
+  //   // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成
+  //   bannerList: {
+  //     handler() {
+  //       // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
+  //       this.$nextTick(() => {
+  //         //监视哪个数据变化之后所执行的函数
+  //         // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
+  //         // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
+  //         new Swiper(this.$refs.floorSwiper, {
+  //           loop: true, // 循环模式选项
+
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: ".swiper-pagination",
+  //           },
+
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: ".swiper-button-next",
+  //             prevEl: ".swiper-button-prev",
+  //           },
+  //         });
+  //       });
+  //     },
+  //   },
+  // },
+
 };
 </script>
 
