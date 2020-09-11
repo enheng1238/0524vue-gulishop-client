@@ -146,28 +146,33 @@ export default {
   // computed 计算 根据已有的数据计算出来想要的没有的数据
   // 一般监视  只能监视数组本身数据的改变 监视不到数组当中对象的属性值的变化
   watch: {
-    // 监视：一般监视和深度监视  
+    // 监视：一般监视和深度监视
     // 监视哪个数据变化之后所执行的函数
     // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成
-    bannerList :{
-      handler(){
-        //监视哪个数据变化之后所执行的函数
+    bannerList: {
+      handler() {
+        // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
+        this.$nextTick(() => {
+          //监视哪个数据变化之后所执行的函数
+          // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
+          // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
           new Swiper(this.$refs.bannerSwiper, {
-        loop: true, // 循环模式选项
+            loop: true, // 循环模式选项
 
-        // 如果需要分页器
-        pagination: {
-          el: ".swiper-pagination",
-        },
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+            },
 
-        // 如果需要前进后退按钮
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      });
-      }
-    }
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
   },
 
   // 深度监视 能监视到数组当中对象的属性值的变化
@@ -180,7 +185,6 @@ export default {
   //     }
   //   }
   // },
-
 };
 </script>
 
