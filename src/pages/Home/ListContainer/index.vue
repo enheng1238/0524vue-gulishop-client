@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "ListContainer",
   mounted() {
@@ -120,6 +121,13 @@ export default {
     getBannerList(){
       this.$store.dispatch('getBannerList')
     }
+  },
+  computed: {
+      // 不能用数组 因为bannerList不在总督store的state里边 ,只有在总的store的state里边才能用数组
+    ...mapState({//不能用[] 不在总的store的state里边
+        bannerList : state => state.home.bannerList
+
+    })
   },
 };
 </script>
