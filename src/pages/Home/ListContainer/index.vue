@@ -4,7 +4,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container">
+        <div class="swiper-container" ref="bannerSwiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(banner, index) in bannerList" :key="banner.id">
               <img :src="banner.imgUrl" />
@@ -116,7 +116,7 @@ export default {
     // 1.实例化swiper写在mounted当中,不能保证bannerList有数据,也就没法保证上面的轮播div结构形成
     // 2.即使数据能保证回来,放在mounted当中也不能保证结构形成,因为上面dic通过for循环去创建也需要时间
     setTimeout(()=>{
-            new Swiper ('.swiper-container', {
+            new Swiper (this.$refs.bannerSwiper, {
     loop: true, // 循环模式选项
     
     // 如果需要分页器
