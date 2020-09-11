@@ -21,22 +21,28 @@ import Rank from './Rank'
 import Like from './Like'
 import Floor from './Floor'
 import Brand from './Brand'
+import { mapState } from 'vuex'
 
 
 
 export default {
     name:"Home",
     mounted() {
-        this.getBannerList()
+        // this.getBannerList()
         this.getFloorList()
     },
     methods: {
-        getBannerList(){
-            this.$store.dispatch('getBannerList')
-        },
+        // getBannerList(){
+        //     this.$store.dispatch('getBannerList')
+        // },
         getFloorList(){
              this.$store.dispatch('getFloorList')
         }
+    },
+    computed: {
+        ...mapState({
+            floorList:state => state.home.floorList
+        })
     },
     components:{
         ListContainer,
