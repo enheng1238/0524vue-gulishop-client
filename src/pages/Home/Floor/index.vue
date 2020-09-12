@@ -24,20 +24,21 @@
               <img :src="floor.imgUrl" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" ref="floorSwiper">
+              <SliderLoop :bannerList="floor.carouselList"></SliderLoop>
+              <!-- <div class="swiper-container" ref="floorSwiper">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide" v-for="(carousel,index) in floor.carouselList" :key="carousel.id">
                     <img :src="carousel.imgUrl" />
                   </div>
                  
-                </div>
+                </div> -->
                 <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
+                <!-- <div class="swiper-pagination"></div> -->
 
                 <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
+                <!-- <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div> -->
+              <!-- </div> -->
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
@@ -94,37 +95,37 @@ export default {
   
   },
 
-   watch: {
-    // 监视：一般监视和深度监视
-    // 监视哪个数据变化之后所执行的函数
-    // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成 
-    floor: {
-      handler() {
-        immediate:true, //无论怎么样 必须立即执行一次handler函数 不管它变不变 添加这个东西没意思 只是让两边的代码一样
-        // deep:true,
-        // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
-        this.$nextTick(() => {
-          //监视哪个数据变化之后所执行的函数
-          // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
-          // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
-          new Swiper(this.$refs.floorSwiper, {
-            loop: true, // 循环模式选项
+  //  watch: {
+  //   // 监视：一般监视和深度监视
+  //   // 监视哪个数据变化之后所执行的函数
+  //   // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成 
+  //   floor: {
+  //     handler() {
+  //       immediate:true, //无论怎么样 必须立即执行一次handler函数 不管它变不变 添加这个东西没意思 只是让两边的代码一样
+  //       // deep:true,
+  //       // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
+  //       this.$nextTick(() => {
+  //         //监视哪个数据变化之后所执行的函数
+  //         // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
+  //         // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
+  //         new Swiper(this.$refs.floorSwiper, {
+  //           loop: true, // 循环模式选项
 
-            // 如果需要分页器
-            pagination: {
-              el: ".swiper-pagination",
-            },
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: ".swiper-pagination",
+  //           },
 
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      },
-    },
-  },
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: ".swiper-button-next",
+  //             prevEl: ".swiper-button-prev",
+  //           },
+  //         });
+  //       });
+  //     },
+  //   },
+  // },
 
 };
 </script>

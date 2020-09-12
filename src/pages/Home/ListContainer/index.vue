@@ -3,20 +3,21 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
+        <SliderLoop :bannerList="bannerList"></SliderLoop>
         <!--banner轮播-->
-        <div class="swiper-container" ref="bannerSwiper">
+        <!-- <div class="swiper-container" ref="bannerSwiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(banner, index) in bannerList" :key="banner.id">
               <img :src="banner.imgUrl" />
             </div>
-          </div>
+          </div> -->
           <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
+          <!-- <div class="swiper-pagination"></div> -->
 
           <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+          <!-- <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div> -->
+        <!-- </div> -->
       </div>
       <div class="right">
         <div class="news">
@@ -145,35 +146,36 @@ export default {
   // watch 监视  有数据用监视(数据一定存在 但是值可能变化) 干其他的事
   // computed 计算 根据已有的数据计算出来想要的没有的数据
   // 一般监视  只能监视数组本身数据的改变 监视不到数组当中对象的属性值的变化
-  watch: {
-    // 监视：一般监视和深度监视
-    // 监视哪个数据变化之后所执行的函数
-    // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成
-    bannerList: {
-      handler() {
-        // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
-        this.$nextTick(() => {
-          //监视哪个数据变化之后所执行的函数
-          // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
-          // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
-          new Swiper(this.$refs.bannerSwiper, {
-            loop: true, // 循环模式选项
+  // watch: {
+  //   // 监视：一般监视和深度监视
+  //   // 监视哪个数据变化之后所执行的函数
+  //   // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成
+  //   bannerList: {
+  //     immediate:true,//添加这个东西没意思，只是让两边的代码一样
+  //     handler() {
+  //       // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
+  //       this.$nextTick(() => {
+  //         //监视哪个数据变化之后所执行的函数
+  //         // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
+  //         // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
+  //         new Swiper(this.$refs.bannerSwiper, {
+  //           loop: true, // 循环模式选项
 
-            // 如果需要分页器
-            pagination: {
-              el: ".swiper-pagination",
-            },
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: ".swiper-pagination",
+  //           },
 
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      },
-    },
-  },
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: ".swiper-button-next",
+  //             prevEl: ".swiper-button-prev",
+  //           },
+  //         });
+  //       });
+  //     },
+  //   },
+  // },
 
   // 深度监视 能监视到数组当中对象的属性值的变化
   //  watch: {
