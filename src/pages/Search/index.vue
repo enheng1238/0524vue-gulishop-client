@@ -148,11 +148,11 @@ export default {
         // 初始化的搜索参数
         // 这个searchParams是用户初始化搜索状态数据 有可能发送请求的搜索参数全部都包含
         // 只不过大部分是空的
-        category1Id: "",
-        category2Id: "",
-        category3Id: "",
-        categoryName: "",
-        keyword: "",
+        // category1Id: "",
+        // category2Id: "",
+        // category3Id: "",
+        // categoryName: "",
+        // keyword: "",
 
         // 代表的是用户发送请问iu默认的参数 默认获取第几页 默认排序规则是啥 默认每一页的个数
         order: "1:desc",
@@ -160,7 +160,7 @@ export default {
         pageSize: 2,
 
         props: [],
-        trademark: "",
+        // trademark: "",
       },
     };
   },
@@ -176,7 +176,7 @@ export default {
       categoryName
       } = this.$route.query
     let {keyword} = this.$route.params
-    
+
     let searchParams = {
       ...this.searchParams,
       category1Id,
