@@ -14,11 +14,11 @@
             
             <li class="with-x" v-show="searchParams.categoryName">
               {{searchParams.categoryName}}
-              <i>×</i>
+              <i @click="removeCategoryName">×</i>
             </li>
            <li class="with-x" v-show="searchParams.keyword">
               {{searchParams.keyword}}
-              <i>×</i>
+              <i @click="removeKeyword">×</i>
             </li>
           </ul>
         </div>
@@ -223,6 +223,16 @@ export default {
       }
     });
     this.searchParams = searchParams;
+    },
+  //  点击面包屑当中的× 删除参数当中的categoryName 重新发送请求
+   removeCategoryName(){
+      this.searchParams.categoryName = null
+      this.getGoodsListInfo();
+    },
+     // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
+    removeKeyword(){
+       this.searchParams.keyword = null
+       this.getGoodsListInfo();
     }
   },
 
