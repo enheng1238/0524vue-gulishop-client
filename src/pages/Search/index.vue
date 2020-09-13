@@ -148,11 +148,11 @@ export default {
         // 初始化的搜索参数
         // 这个searchParams是用户初始化搜索状态数据 有可能发送请求的搜索参数全部都包含
         // 只不过大部分是空的
-        // category1Id: "",
-        // category2Id: "",
-        // category3Id: "",
-        // categoryName: "",
-        // keyword: "",
+        category1Id: "",
+        category2Id: "",
+        category3Id: "",
+        categoryName: "",
+        keyword: "",
 
         // 代表的是用户发送请问iu默认的参数 默认获取第几页 默认排序规则是啥 默认每一页的个数
         order: "1:desc",
@@ -160,7 +160,7 @@ export default {
         pageSize: 2,
 
         props: [],
-        // trademark: "",
+        trademark: "",
       },
     };
   },
@@ -168,7 +168,7 @@ export default {
   beforeMount() {
     //我们可以从路由中获取所需要的query参数和params参数
     // 传递的参数如果是undefined代表没传,如果传递的参数是 '' ,其实是真的有参数,但是其实没必要传递空串的参数 传空串是占位置占带宽的
-    // 把参数是空串
+    // 把参数是空串的全部过滤掉
     let {
       category1Id,
       category2Id,
@@ -185,6 +185,13 @@ export default {
       categoryName,
       keyword
     }
+
+    Object.keys(searchParams).forEach((item) => {
+      if(searchParams[item] === ''){
+        delete searchParams[item]
+      }
+    })
+    this.searchParams = searchParams
   },
   mounted() {
     //发请求
