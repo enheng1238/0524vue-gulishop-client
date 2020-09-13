@@ -164,6 +164,28 @@ export default {
       },
     };
   },
+  // 根据类别和关键字进行搜索,其实本质就是在mounted之前你,把相关的参数给拿到,赋值给我们的searchParams,然后请求
+  beforeMount() {
+    //我们可以从路由中获取所需要的query参数和params参数
+    // 传递的参数如果是undefined代表没传,如果传递的参数是 '' ,其实是真的有参数,但是其实没必要传递空串的参数 传空串是占位置占带宽的
+    // 把参数是空串
+    let {
+      category1Id,
+      category2Id,
+      category3Id,
+      categoryName
+      } = this.$route.query
+    let {keyword} = this.$route.params
+    
+    let searchParams = {
+      ...this.searchParams,
+      category1Id,
+      category2Id,
+      category3Id,
+      categoryName,
+      keyword
+    }
+  },
   mounted() {
     //发请求
     //  在组件里边发请求
