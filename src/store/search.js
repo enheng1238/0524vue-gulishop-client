@@ -33,7 +33,7 @@ const getters = {
             return state.goodsListInfo.goodsList || []
         },
         trademarkList(state){
-            return state.goodsListInfo.goodsList || []
+            return state.goodsListInfo.trademarkList || []
         }
 }
 

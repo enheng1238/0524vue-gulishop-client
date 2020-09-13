@@ -4,24 +4,7 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li>索尼（SONY）</li>
-          <li>TCL</li>
-          <li>长虹（CHANGHONG）</li>
-          <li>飞利浦（PHILIPS）</li>
-          <li>风行电视</li>
-          <li><img src="./images/phone06.png" /></li>
-          <li><img src="./images/phone07.png" /></li>
-          <li><img src="./images/phone08.png" /></li>
-          <li><img src="./images/phone09.png" /></li>
-          <li><img src="./images/phone10.png" /></li>
-          <li><img src="./images/phone11.png" /></li>
-          <li><img src="./images/phone12.png" /></li>
-          <li><img src="./images/phone12.png" /></li>
-          <li><img src="./images/phone14.png" /></li>
-          <li><img src="./images/phone01.png" /></li>
-          <li><img src="./images/phone06.png" /></li>
-          <li><img src="./images/phone07.png" /></li>
-          <li><img src="./images/phone02.png" /></li>
+          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
         </ul>
       </div>
       <div class="ext">
@@ -29,40 +12,14 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
-    <div class="type-wrap">
-      <div class="fl key">网络制式</div>
+    <div class="type-wrap" v-for="(attr,index) in attrsList" :key="attr.attrId">
+      <div class="fl key">{{attr.attrName}}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li>
-            <a>GSM（移动/联通2G）</a>
+          <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
+            <a>{{attrValue}}</a>
           </li>
-          <li>
-            <a>电信2G</a>
-          </li>
-          <li>
-            <a>电信3G</a>
-          </li>
-          <li>
-            <a>移动3G</a>
-          </li>
-          <li>
-            <a>联通3G</a>
-          </li>
-          <li>
-            <a>联通4G</a>
-          </li>
-          <li>
-            <a>电信3G</a>
-          </li>
-          <li>
-            <a>移动3G</a>
-          </li>
-          <li>
-            <a>联通3G</a>
-          </li>
-          <li>
-            <a>联通4G</a>
-          </li>
+ 
         </ul>
       </div>
       <div class="fl ext"></div>
@@ -159,8 +116,12 @@
 </template>
 
 <script>
+import { mapGetters , mapActions} from 'vuex'
   export default {
     name: 'SearchSelector',
+    computed: {
+      ...mapGetters(['attrsList','trademarkList'])
+    },
   }
 </script>
 
