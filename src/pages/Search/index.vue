@@ -76,9 +76,7 @@
                       target="_blank"
                       href="item.html"
                       title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                    >
-                     {{goods.title}}
-                    </a>
+                    >{{goods.title}}</a>
                   </div>
                   <div class="commit">
                     <i class="command">
@@ -138,7 +136,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "Search",
@@ -173,9 +171,9 @@ export default {
       category1Id,
       category2Id,
       category3Id,
-      categoryName
-      } = this.$route.query
-    let {keyword} = this.$route.params
+      categoryName,
+    } = this.$route.query;
+    let { keyword } = this.$route.params;
 
     let searchParams = {
       ...this.searchParams,
@@ -183,15 +181,15 @@ export default {
       category2Id,
       category3Id,
       categoryName,
-      keyword
-    }
+      keyword,
+    };
 
     Object.keys(searchParams).forEach((item) => {
-      if(searchParams[item] === ''){
-        delete searchParams[item]
+      if (searchParams[item] === "") {
+        delete searchParams[item];
       }
-    })
-    this.searchParams = searchParams
+    });
+    this.searchParams = searchParams;
   },
   mounted() {
     //发请求
@@ -201,7 +199,7 @@ export default {
   methods: {
     getGoodsListInfo() {
       // 这次触发actions的时候需传递搜索参数 它是一个对象
-      this.$store.dispatch("getGoodsListInfo",this.searchParams);
+      this.$store.dispatch("getGoodsListInfo", this.searchParams);
     },
   },
 
@@ -221,9 +219,44 @@ export default {
   // attrsList attrsList 两个数据是子组件需要展示的,到子组件当中去获取,可以避免组件通信
 
   computed: {
-    ...mapGetters(['goodsList'])//父组件search当中只需要拿到商品列表去展示
+    ...mapGetters(["goodsList"]), //父组件search当中只需要拿到商品列表去展示
   },
-  
+  // 深度监视牵扯到的是数组
+  // 其实在search页面重复发送请求只能通过监视当前的路由对象,自己手动调用去发请求
+  // 因为mounted在路由组件当中不切换的情况下只会执行一次
+  watch: {
+    $route: {
+      handler(newVal, oldVal) {
+        let {
+          category1Id,
+          category2Id,
+          category3Id,
+          categoryName,
+        } = this.$route.query;
+        let { keyword } = this.$route.params;
+
+        let searchParams = {
+          ...this.searchParams,
+          category1Id,
+          category2Id,
+          category3Id,
+          categoryName,
+          keyword,
+        };
+
+        Object.keys(searchParams).forEach((item) => {
+          if (searchParams[item] === "") {
+            delete searchParams[item];
+          }
+        });
+        this.searchParams = searchParams;
+        this.getGoodsListInfo();
+
+      },
+    },
+
+    // $route(newVal,oldVal){}
+  },
 };
 </script>
 
