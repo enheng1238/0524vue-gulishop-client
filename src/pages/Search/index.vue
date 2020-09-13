@@ -11,12 +11,11 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            
             <li class="with-x" v-show="searchParams.categoryName">
               {{searchParams.categoryName}}
               <i @click="removeCategoryName">×</i>
             </li>
-           <li class="with-x" v-show="searchParams.keyword">
+            <li class="with-x" v-show="searchParams.keyword">
               {{searchParams.keyword}}
               <i @click="removeKeyword">×</i>
             </li>
@@ -186,7 +185,7 @@ export default {
     //   }
     // });
     // this.searchParams = searchParams;
-    this.handlerSearchParams()
+    this.handlerSearchParams();
   },
   mounted() {
     //发请求
@@ -199,41 +198,46 @@ export default {
       this.$store.dispatch("getGoodsListInfo", this.searchParams);
     },
     // 请求前处理params和query参数
-    handlerSearchParams(){
+    handlerSearchParams() {
       let {
-      category1Id,
-      category2Id,
-      category3Id,
-      categoryName,
-    } = this.$route.query;
-    let { keyword } = this.$route.params;
+        category1Id,
+        category2Id,
+        category3Id,
+        categoryName,
+      } = this.$route.query;
+      let { keyword } = this.$route.params;
 
-    let searchParams = {
-      ...this.searchParams,
-      category1Id,
-      category2Id,
-      category3Id,
-      categoryName,
-      keyword,
-    };
+      let searchParams = {
+        ...this.searchParams,
+        category1Id,
+        category2Id,
+        category3Id,
+        categoryName,
+        keyword,
+      };
 
-    Object.keys(searchParams).forEach((item) => {
-      if (searchParams[item] === "") {
-        delete searchParams[item];
-      }
-    });
-    this.searchParams = searchParams;
+      Object.keys(searchParams).forEach((item) => {
+        if (searchParams[item] === "") {
+          delete searchParams[item];
+        }
+      });
+      this.searchParams = searchParams;
     },
-  //  点击面包屑当中的× 删除参数当中的categoryName 重新发送请求
-   removeCategoryName(){
-      this.searchParams.categoryName = null
-      this.getGoodsListInfo();
+    //  点击面包屑当中的× 删除参数当中的categoryName 重新发送请求
+    removeCategoryName() {
+      this.searchParams.categoryName = undefined;
+      // this.getGoodsListInfo();
+      // 虽然可以发请求，但是路径当中的参数不会被删除,因为路由当中的参数是没变化的,所以我们必须
+      // 自己手动跳转路由,修改路由当中的参数
+      // 自动发请求(watch)
+      this.$router.push({name:'search',params:this.$route.params})
     },
-     // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
-    removeKeyword(){
-       this.searchParams.keyword = undefined
-       this.getGoodsListInfo();
-    }
+    // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
+    removeKeyword() {
+      this.searchParams.keyword = undefined;
+      // this.getGoodsListInfo();
+       this.$router.push({name:'search',query:this.$route.query})
+    },
   },
 
   components: {
@@ -260,7 +264,7 @@ export default {
   watch: {
     $route: {
       handler(newVal, oldVal) {
-        this.handlerSearchParams()
+        this.handlerSearchParams();
         // let {
         //   category1Id,
         //   category2Id,
@@ -285,7 +289,6 @@ export default {
         // });
         // this.searchParams = searchParams;
         this.getGoodsListInfo();
-
       },
     },
 
