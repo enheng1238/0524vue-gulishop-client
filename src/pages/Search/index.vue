@@ -16,7 +16,10 @@
               {{searchParams.categoryName}}
               <i>×</i>
             </li>
-          
+           <li class="with-x" v-show="searchParams.keyword">
+              {{searchParams.keyword}}
+              <i>×</i>
+            </li>
           </ul>
         </div>
 
