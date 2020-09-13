@@ -231,7 +231,7 @@ export default {
     },
      // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
     removeKeyword(){
-       this.searchParams.keyword = null
+       this.searchParams.keyword = undefined
        this.getGoodsListInfo();
     }
   },
