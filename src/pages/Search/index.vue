@@ -167,7 +167,44 @@ export default {
     //我们可以从路由中获取所需要的query参数和params参数
     // 传递的参数如果是undefined代表没传,如果传递的参数是 '' ,其实是真的有参数,但是其实没必要传递空串的参数 传空串是占位置占带宽的
     // 把参数是空串的全部过滤掉
-    let {
+    // let {
+    //   category1Id,
+    //   category2Id,
+    //   category3Id,
+    //   categoryName,
+    // } = this.$route.query;
+    // let { keyword } = this.$route.params;
+
+    // let searchParams = {
+    //   ...this.searchParams,
+    //   category1Id,
+    //   category2Id,
+    //   category3Id,
+    //   categoryName,
+    //   keyword,
+    // };
+
+    // Object.keys(searchParams).forEach((item) => {
+    //   if (searchParams[item] === "") {
+    //     delete searchParams[item];
+    //   }
+    // });
+    // this.searchParams = searchParams;
+    this.handlerSearchParams()
+  },
+  mounted() {
+    //发请求
+    //  在组件里边发请求
+    this.getGoodsListInfo();
+  },
+  methods: {
+    getGoodsListInfo() {
+      // 这次触发actions的时候需传递搜索参数 它是一个对象
+      this.$store.dispatch("getGoodsListInfo", this.searchParams);
+    },
+    // 请求前处理params和query参数
+    handlerSearchParams(){
+      let {
       category1Id,
       category2Id,
       category3Id,
@@ -190,17 +227,7 @@ export default {
       }
     });
     this.searchParams = searchParams;
-  },
-  mounted() {
-    //发请求
-    //  在组件里边发请求
-    this.getGoodsListInfo();
-  },
-  methods: {
-    getGoodsListInfo() {
-      // 这次触发actions的时候需传递搜索参数 它是一个对象
-      this.$store.dispatch("getGoodsListInfo", this.searchParams);
-    },
+    }
   },
 
   components: {
@@ -227,29 +254,30 @@ export default {
   watch: {
     $route: {
       handler(newVal, oldVal) {
-        let {
-          category1Id,
-          category2Id,
-          category3Id,
-          categoryName,
-        } = this.$route.query;
-        let { keyword } = this.$route.params;
+        this.handlerSearchParams()
+        // let {
+        //   category1Id,
+        //   category2Id,
+        //   category3Id,
+        //   categoryName,
+        // } = this.$route.query;
+        // let { keyword } = this.$route.params;
 
-        let searchParams = {
-          ...this.searchParams,
-          category1Id,
-          category2Id,
-          category3Id,
-          categoryName,
-          keyword,
-        };
+        // let searchParams = {
+        //   ...this.searchParams,
+        //   category1Id,
+        //   category2Id,
+        //   category3Id,
+        //   categoryName,
+        //   keyword,
+        // };
 
-        Object.keys(searchParams).forEach((item) => {
-          if (searchParams[item] === "") {
-            delete searchParams[item];
-          }
-        });
-        this.searchParams = searchParams;
+        // Object.keys(searchParams).forEach((item) => {
+        //   if (searchParams[item] === "") {
+        //     delete searchParams[item];
+        //   }
+        // });
+        // this.searchParams = searchParams;
         this.getGoodsListInfo();
 
       },
