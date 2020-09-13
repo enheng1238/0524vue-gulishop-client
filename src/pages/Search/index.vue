@@ -19,11 +19,16 @@
               {{searchParams.keyword}}
               <i @click="removeKeyword">×</i>
             </li>
+            <!-- 空串会被过滤掉  undefined  -->
+            <li class="with-x" v-if="searchParams.trademark">
+              {{searchParams.trademark.split(':')[1]}}
+              <i @click="removeTrademark">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @searchForTrademark="searchForTrademark" />
 
         <!--details-->
         <div class="details clearfix">
@@ -230,13 +235,31 @@ export default {
       // 虽然可以发请求，但是路径当中的参数不会被删除,因为路由当中的参数是没变化的,所以我们必须
       // 自己手动跳转路由,修改路由当中的参数
       // 自动发请求(watch)
-      this.$router.push({name:'search',params:this.$route.params})
+
+      // 通知header组件把输入框当中的keyword清空
+      // $on 想要接收数据 事件的回调函数留在里边
+      // $emit 发送数据 有数据就发 没数据就触发事件
+
+      this.$router.push({ name: "search", params: this.$route.params });
     },
     // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
     removeKeyword() {
       this.searchParams.keyword = undefined;
       // this.getGoodsListInfo();
-       this.$router.push({name:'search',query:this.$route.query})
+      this.$bus.$emit("clearKeyword");
+      this.$router.push({ name: "search", query: this.$route.query });
+    },
+    // 点击面包屑当中的× 删除参数当中的removeTrademark 重新发送请求
+    removeTrademark() {
+      this.searchParams.trademark = undefined;
+      this.getGoodsListInfo();
+    },
+    // 子向父传递品牌数据 按照品牌搜索
+    searchForTrademark(trademark) {
+      // 'id:name'
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`; //根据品牌搜索一定要参考文档去看参数的结构
+      this.getGoodsListInfo();
+      // console.log(trademark)
     },
   },
 

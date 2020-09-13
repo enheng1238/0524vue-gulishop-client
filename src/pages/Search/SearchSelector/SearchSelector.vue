@@ -4,7 +4,7 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
+          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId" @click="$emit('searchForTrademark',trademark)">{{trademark.tmName}}</li>
         </ul>
       </div>
       <div class="ext">
@@ -17,7 +17,7 @@
       <div class="fl value">
         <ul class="type-list">
           <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
-            <a>{{attrValue}}</a>
+            <a>{{attr.attrValue}}</a>
           </li>
  
         </ul>

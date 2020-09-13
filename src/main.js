@@ -24,6 +24,10 @@ Vue.component('SliderLoop',SliderLoop);
 
 
 new Vue({
+  
+  beforeCreate() {
+    Vue.prototype.$bus = this
+  },
   el:"#app",
   // render 渲染
   render:h=>h(App),
