@@ -12,7 +12,7 @@
     <button>7</button>
 
     <button>···</button>
-    <button>9</button>
+    <button>{{totalPageNum}}</button>
     <button>下一页</button>
 
     <button style="margin-left: 30px">共 {{total}} 条</button>
@@ -46,6 +46,12 @@ export default {
       type: Number,
       required: true,
     },
+  },
+  computed: {
+      totalPageNum(){
+        //   向上取整 Math.ceil()
+        return Math.ceil(this.total / this.pageSize)
+      }
   },
 };
 </script>
