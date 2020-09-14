@@ -17,7 +17,7 @@
     v-for in 10 1,2,3,4,5,6,7,8,9,10
     v-for和v-if如果同时存在 先v-for 再v-if
 -->
-    <button v-for="(page) in startEnd.end" :key="page" v-if = "page >= startEnd.start" >{{page}}</button>
+    <button v-for="(page) in startEnd.end" :key="page" v-if = "page >= startEnd.start" :class="{active:currentPageNum === page}">{{page}}</button>
     <!-- <button>3</button>
     <button>4</button>
     <button>5</button>

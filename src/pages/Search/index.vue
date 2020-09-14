@@ -169,7 +169,7 @@ export default {
         // desc 代表降序 asc代表升序
         // 数据决定排序规则 点击--页面变化---数据变化
         order: "1:desc",
-        pageNo: 5,
+        pageNo: 1,
         pageSize: 1,
 
         props: [],
