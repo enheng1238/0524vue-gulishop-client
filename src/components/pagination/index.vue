@@ -6,20 +6,27 @@
     computed:计算出来的
  -->
   <div class="pagination">
-    <button>上一页</button>
-    <button>1</button>
+    <button :disabled="currentPageNum === 1">上一页</button>
+    <button v-if="startEnd.start > 1">1</button>
 
-    <button>···</button>
+    <button v-if="startEnd.start > 2">···</button>
 
-    <button>3</button>
+<!--
+     v-for 可以遍历数字 遍历数字从1开始
+    v-for in 5 1,2,3,4,5
+    v-for in 10 1,2,3,4,5,6,7,8,9,10
+    v-for和v-if如果同时存在 先v-for 再v-if
+-->
+    <button v-for="(page) in startEnd.end" :key="page" v-if = "page >= startEnd.start" >{{page}}</button>
+    <!-- <button>3</button>
     <button>4</button>
     <button>5</button>
     <button>6</button>
-    <button>7</button>
+    <button>7</button> -->
 
-    <button>···</button>
-    <button>{{totalPageNum}}</button>
-    <button>下一页</button>
+    <button v-if="startEnd.end < totalPageNum -1">···</button> 
+    <button v-if="startEnd.end < totalPageNum">{{totalPageNum}}</button>
+    <button :disabled="currentPageNum === totalPageNum">下一页</button>
 
     <button style="margin-left: 30px">共 {{total}} 条</button>
   </div>
