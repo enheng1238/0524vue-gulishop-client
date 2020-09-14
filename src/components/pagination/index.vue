@@ -1,4 +1,10 @@
 <template>
+<!-- 
+
+    props:从父组件中拿的
+    data:初始数据
+    computed:计算出来的
+ -->
   <div class="pagination">
     <button>上一页</button>
     <button>1</button>
@@ -12,7 +18,7 @@
     <button>7</button>
 
     <button>···</button>
-    <button>{{totalPageNum}}</button>
+    <button>{{totalPageNumgit}}</button>
     <button>下一页</button>
 
     <button style="margin-left: 30px">共 {{total}} 条</button>
@@ -51,7 +57,13 @@ export default {
       totalPageNum(){
         //   向上取整 Math.ceil()
         return Math.ceil(this.total / this.pageSize)
-      }
+      },
+    //   连续页码的起始位置和结束位置   
+    //     当前页 连续页数 计算出来的值  首页
+    startEnd(){
+        // 要想计算连续页的起始位置和结束位置和三个数据有关系 : 当前页码 连续数量 总页数
+        let {currentPageNum,continueNum,totalPageNum} = this
+    }
   },
 };
 </script>
