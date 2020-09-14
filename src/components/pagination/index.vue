@@ -63,6 +63,40 @@ export default {
     startEnd(){
         // 要想计算连续页的起始位置和结束位置和三个数据有关系 : 当前页码 连续数量 总页数
         let {currentPageNum,continueNum,totalPageNum} = this
+
+        let start,end,disNum
+        if(totalPageNum <= continueNum){
+            // 连续页数比总页数还大，那么1为起始 总页数就是结束
+            start = 1;
+            end = totalPageNum;
+        }else{
+            // 计算正常情况
+            // Math.floor 向下取整
+            start = currentPageNum - Math.floor(continueNum / 2)
+            end = currentPageNum + Math.floor(continueNum / 2)
+
+            if(start <= 1){
+                // 左侧边界修正
+                disNum = 1 - start;//指的是算出来的start和1之间的差值,为了后面去修正算出来的start和end
+                start += disNum;
+                end += disNum;
+
+                // start = 1;
+                // end = continueNum;
+            }
+
+            if(end >= totalPageNum ){
+                // 右侧边界修正
+                disNum = end - totalPageNum;
+                start -= disNum;
+                end -= disNum;
+
+                // start = totalPageNum - continueNum;
+                // end = totalPageNum;
+            }
+        }
+
+        return {start,end}
     }
   },
 };
