@@ -40,7 +40,13 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
+                <!-- 数据决定了页面的显示
+                  1.数据要清楚
+                  2.背景色谁有 根据数据当中排序标志来决定
+                  3.背景色谁有，那么箭头谁就有
+
+                 -->
+                <li :class="{active:searchParams.order.split(':')[0] === '1'}">
                   <a href="#">综合</a>
                 </li>
                 <li>
@@ -52,12 +58,10 @@
                 <li>
                   <a href="#">评价</a>
                 </li>
-                <li>
+                <li :class="{active:searchParams.order.split(':')[0] === '2'}">
                   <a href="#">价格⬆</a>
                 </li>
-                <li>
-                  <a href="#">价格⬇</a>
-                </li>
+                
               </ul>
             </div>
           </div>
@@ -158,7 +162,12 @@ export default {
         keyword: "",
 
         // 代表的是用户发送请问iu默认的参数 默认获取第几页 默认排序规则是啥 默认每一页的个数
-        order: "1:desc",
+        // order 规则   
+        // 排序标志:排序类型  
+        // 排序标志 1  代表综合排序   2代表价格排序
+        // desc 代表降序 asc代表升序
+        // 数据决定排序规则 点击--页面变化---数据变化
+        order: "2:desc",
         pageNo: 1,
         pageSize: 2,
 
