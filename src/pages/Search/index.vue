@@ -282,10 +282,10 @@ export default {
 
   },
 // 删除面包屑当中的属性
-// removeProp(index){
-//    this.searchParams.props.splice(index, 1);
-//    this.getGoodsListInfo();
-// }
+removeProp(index){
+   this.searchParams.props.splice(index, 1);
+   this.getGoodsListInfo();
+}
 
  },
 
