@@ -47,12 +47,15 @@
                   图标用什么？ iconfont
                   图标显示的时候是向上还是向下根据数据的排序类型决定
 
-                 -->
+                -->
                 <li :class="{active:searchParams.order.split(':')[0] === '1'}">
-                  <a href="#">综合
-                     <i 
-                     v-if="searchParams.order.split(':')[0] === '1'"
-                     class="iconfont" :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"></i>
+                  <a href="javascript:;" @click="sortGoods('1')">
+                    综合
+                    <i
+                      v-if="searchParams.order.split(':')[0] === '1'"
+                      class="iconfont"
+                      :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"
+                    ></i>
                   </a>
                 </li>
                 <li>
@@ -65,16 +68,16 @@
                   <a href="#">评价</a>
                 </li>
 
-                <li :class="{active:searchParams.order.split(':')[0] === '2'}"> 
-                  <a href="#">
+                <li :class="{active:searchParams.order.split(':')[0] === '2'}">
+                  <a href="javascript:;" @click="sortGoods('2')">
                     价格
-                    <i 
-                    v-if="searchParams.order.split(':')[0] === '2'"
-                    class="iconfont" :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"></i>
+                    <i
+                      v-if="searchParams.order.split(':')[0] === '2'"
+                      class="iconfont"
+                      :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"
+                    ></i>
                   </a>
-                 
                 </li>
-                
               </ul>
             </div>
           </div>
@@ -175,8 +178,8 @@ export default {
         keyword: "",
 
         // 代表的是用户发送请问iu默认的参数 默认获取第几页 默认排序规则是啥 默认每一页的个数
-        // order 规则   
-        // 排序标志:排序类型  
+        // order 规则
+        // 排序标志:排序类型
         // 排序标志 1  代表综合排序   2代表价格排序
         // desc 代表降序 asc代表升序
         // 数据决定排序规则 点击--页面变化---数据变化
@@ -308,6 +311,27 @@ export default {
     // 删除面包屑当中的属性
     removeProp(index) {
       this.searchParams.props.splice(index, 1);
+      this.getGoodsListInfo();
+    },
+    // 点击综合价格进行排序
+    sortGoods(sortFlag) {
+      // 拿到原本数据当中的排序标志和排序类型
+      let originSortFlag = this.searchParams.order.split(":")[0];
+      let originSortType = this.searchParams.order.split(":")[1];
+      let newOrder = "";
+
+      // 判断sortFlag
+      if (sortFlag === originSortFlag) {
+        // 点击的还是原来的排序标志
+        newOrder = `${originSortFlag}:${
+          originSortType === "asc" ? "desc" : "asc"
+        }`;
+      } else {
+        // 点击的是新的哪个排序
+        newOrder = `${sortFlag}:desc`; //默认降序
+      }
+      // 把新的排序规则更新然后重新发请求
+      this.searchParams.order = newOrder;
       this.getGoodsListInfo();
     },
   },
