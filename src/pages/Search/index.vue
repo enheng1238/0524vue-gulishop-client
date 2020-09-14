@@ -24,11 +24,16 @@
               {{searchParams.trademark.split(':')[1]}}
               <i @click="removeTrademark">×</i>
             </li>
+
+             <!-- <li class="with-x" v-for="(prop, index) in searchParams.props" :key="index">
+              {{prop.split(':')[1]}}
+              <i @click="removeProp(index)">×</i>
+            </li> -->
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @searchForTrademark="searchForTrademark" />
+        <SearchSelector @searchForTrademark="searchForTrademark" @searchForProps="searchForProps" />
 
         <!--details-->
         <div class="details clearfix">
@@ -261,7 +266,28 @@ export default {
       this.getGoodsListInfo();
       // console.log(trademark)
     },
+  // 
+  searchForProps(attr,attrValue){
+        //  属性ID:属性值:属性名
+        let prop =  `${attr.attrId}:${attrValue}:${attr.attrName}`
+
+        // some 只要数组当中有一个符合条件就为true
+        // every 所有的都符合条件才为true
+        // 加入之前判断数组当中是否存在,如果已经存在就不需要再次加入并且发送请求了
+        let repeat = this.searchParams.props.some(item => item === prop)
+        if(repeat) return
+
+        this.searchParams.props.push(prop)
+        this.getGoodsListInfo();
+
   },
+// 删除面包屑当中的属性
+// removeProp(index){
+//    this.searchParams.props.splice(index, 1);
+//    this.getGoodsListInfo();
+// }
+
+ },
 
   components: {
     SearchSelector,

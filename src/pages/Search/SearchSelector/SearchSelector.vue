@@ -17,7 +17,8 @@
       <div class="fl value">
         <ul class="type-list">
           <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
-            <a>{{attr.attrValue}}</a>
+            <a href="javascript:;" @click="$emit('searchForProps',attr,attrValue)">{{attrValue}}</a>
+            <!-- 属性ID:属性值:属性名 -->
           </li>
  
         </ul>
