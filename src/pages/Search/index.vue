@@ -44,10 +44,16 @@
                   1.数据要清楚
                   2.背景色谁有 根据数据当中排序标志来决定
                   3.背景色谁有，那么箭头谁就有
+                  图标用什么？ iconfont
+                  图标显示的时候是向上还是向下根据数据的排序类型决定
 
                  -->
                 <li :class="{active:searchParams.order.split(':')[0] === '1'}">
-                  <a href="#">综合</a>
+                  <a href="#">综合
+                     <i 
+                     v-if="searchParams.order.split(':')[0] === '1'"
+                     class="iconfont" :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"></i>
+                  </a>
                 </li>
                 <li>
                   <a href="#">销量</a>
@@ -58,8 +64,15 @@
                 <li>
                   <a href="#">评价</a>
                 </li>
-                <li :class="{active:searchParams.order.split(':')[0] === '2'}">
-                  <a href="#">价格⬆</a>
+
+                <li :class="{active:searchParams.order.split(':')[0] === '2'}"> 
+                  <a href="#">
+                    价格
+                    <i 
+                    v-if="searchParams.order.split(':')[0] === '1'"
+                    class="iconfont" :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"></i>
+                  </a>
+                 
                 </li>
                 
               </ul>
