@@ -36,9 +36,9 @@
         </a>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm"> 
+        <form action="###" class="searchForm">
           <!-- v-model="keyword" 传参-->
-          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword"/>
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
           <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">搜索</button>
         </form>
       </div>
@@ -52,17 +52,17 @@ export default {
   data() {
     return {
       // 收集 keyword
-      keyword:"",
-    }
+      keyword: "",
+    };
   },
   mounted() {
-    this.$bus.$on('clearKeyword',this.clearKeyword)
+    this.$bus.$on("clearKeyword", this.clearKeyword);
   },
   methods: {
-     clearKeyword(){
-      this.keyword = ''
+    clearKeyword() {
+      this.keyword = "";
     },
-    toSearch(){
+    toSearch() {
       // 1.字符串写法
       // 2.对象写法
       // this.$router.push('/search')
@@ -90,21 +90,27 @@ export default {
       // this.$router.push({name:'search',params:{keyword:''||undefined}})
 
       // 四、props的三种写法
-      let location ={
-        name:"search",
-        params:{keyword:this.keyword || undefined}
+      let location = {
+        name: "search",
+        params: { keyword: this.keyword || undefined },
         // query:{keyword2:this.keyword.toUpperCase()},
-      }
-      console.log("location=",location);
+      };
+      console.log("location=", location);
       // 判断当前路由当中是不是有query参数,有就带上
       //  如果有query参数 证明先点击类别,然后再点击按钮
       // 如果没有query参数,证明直接点击的按钮
-      let {query} = this.$route
-      if(query){
-        location.query = query
+      let { query } = this.$route;
+      if (query) {
+        location.query = query;
       }
-      this.$router.push(location);//路由器对象有push()和replace()
-    }
+      // 判断它是从home页中过来的还是从search页中过来的
+      // 判断当前路由路径是什么,如果是home,那么我们就push,如果不是home那就replace
+      if (this.$route.path !== "./home") {
+        this.$router.replace(location);
+      } else {
+        this.$router.push(location); //路由器对象有push()和replace()
+      }
+    },
   },
 };
 </script>

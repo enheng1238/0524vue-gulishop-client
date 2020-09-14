@@ -25,7 +25,7 @@
               <i @click="removeTrademark">×</i>
             </li>
 
-             <li class="with-x" v-for="(prop, index) in searchParams.props" :key="index">
+            <li class="with-x" v-for="(prop, index) in searchParams.props" :key="index">
               {{prop.split(':')[1]}}
               <i @click="removeProp(index)">×</i>
             </li>
@@ -245,14 +245,17 @@ export default {
       // $on 想要接收数据 事件的回调函数留在里边
       // $emit 发送数据 有数据就发 没数据就触发事件
 
-      this.$router.push({ name: "search", params: this.$route.params });
+      // home页到search页 用push  search页到home页 用replace
+      // this.$router.push({ name: "search", params: this.$route.params });
+      this.$router.replace({ name: "search", params: this.$route.params });
     },
     // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
     removeKeyword() {
       this.searchParams.keyword = undefined;
       // this.getGoodsListInfo();
       this.$bus.$emit("clearKeyword");
-      this.$router.push({ name: "search", query: this.$route.query });
+      // this.$router.push({ name: "search", query: this.$route.query });
+      this.$router.replace({ name: "search", query: this.$route.query });
     },
     // 点击面包屑当中的× 删除参数当中的removeTrademark 重新发送请求
     removeTrademark() {
@@ -266,28 +269,26 @@ export default {
       this.getGoodsListInfo();
       // console.log(trademark)
     },
-  // 
-  searchForProps(attr,attrValue){
-        //  属性ID:属性值:属性名
-        let prop =  `${attr.attrId}:${attrValue}:${attr.attrName}`
+    //
+    searchForProps(attr, attrValue) {
+      //  属性ID:属性值:属性名
+      let prop = `${attr.attrId}:${attrValue}:${attr.attrName}`;
 
-        // some 只要数组当中有一个符合条件就为true
-        // every 所有的都符合条件才为true
-        // 加入之前判断数组当中是否存在,如果已经存在就不需要再次加入并且发送请求了
-        let repeat = this.searchParams.props.some(item => item === prop)
-        if(repeat) return
+      // some 只要数组当中有一个符合条件就为true
+      // every 所有的都符合条件才为true
+      // 加入之前判断数组当中是否存在,如果已经存在就不需要再次加入并且发送请求了
+      let repeat = this.searchParams.props.some((item) => item === prop);
+      if (repeat) return;
 
-        this.searchParams.props.push(prop)
-        this.getGoodsListInfo();
-
+      this.searchParams.props.push(prop);
+      this.getGoodsListInfo();
+    },
+    // 删除面包屑当中的属性
+    removeProp(index) {
+      this.searchParams.props.splice(index, 1);
+      this.getGoodsListInfo();
+    },
   },
-// 删除面包屑当中的属性
-removeProp(index){
-   this.searchParams.props.splice(index, 1);
-   this.getGoodsListInfo();
-}
-
- },
 
   components: {
     SearchSelector,

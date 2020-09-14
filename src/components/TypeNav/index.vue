@@ -4,7 +4,7 @@
     <div class="container">
       <div @mouseleave="moveOutDiv" @mouseenter="moveInDiv">
         <h2 class="all">全部商品分类</h2>
-        <transition name="show"> 
+        <transition name="show">
           <!-- 里边用的定位 -->
           <div class="sort" v-show="isShow">
             <div class="all-sort-list2" @click="toSearch">
@@ -1793,7 +1793,7 @@ export default {
     }
 
     // 发送请求拿数据  放在这里会发多次请求,而且请求的数据是一样的 (home/search都会发 挪到app.vue中)
-    // this.getCategoryList();  
+    // this.getCategoryList();
   },
   methods: {
     //这里边可以获取vuex当中mutations和actions方法
@@ -1876,8 +1876,15 @@ export default {
           location.params = params;
         }
 
+        // 判断它是从home页中过来的还是从search页中过来的
+        // 判断当前路由路径是什么,如果是home,那么我们就push,如果不是home那就replace
         // console.log("location=", location);
-        this.$router.push(location);
+        if (this.$route.path !== "/home") {
+          this.$router.replace(location);
+        } else {
+          this.$router.push(location); //路由器对象有push()和replace()
+        }
+        // this.$router.push(location);
       }
     },
   },
@@ -1990,21 +1997,20 @@ export default {
       width: 210px;
       height: 461px;
       position: absolute;
-    //   background: #fafafa;
+      //   background: #fafafa;
       background: skyblue;
       z-index: 999;
 
-      &.show-enter{
-          opacity: 0;
-          height: 0;
+      &.show-enter {
+        opacity: 0;
+        height: 0;
       }
-      &.show-enter-active{
-          transition: all .5s;
+      &.show-enter-active {
+        transition: all 0.5s;
       }
-      &.show-enter-to{
-          opacity: 1;
-          height: 461px;
-
+      &.show-enter-to {
+        opacity: 1;
+        height: 461px;
       }
 
       .all-sort-list2 {
