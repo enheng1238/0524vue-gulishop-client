@@ -25,10 +25,10 @@
               <i @click="removeTrademark">×</i>
             </li>
 
-             <!-- <li class="with-x" v-for="(prop, index) in searchParams.props" :key="index">
+             <li class="with-x" v-for="(prop, index) in searchParams.props" :key="index">
               {{prop.split(':')[1]}}
               <i @click="removeProp(index)">×</i>
-            </li> -->
+            </li>
           </ul>
         </div>
 
