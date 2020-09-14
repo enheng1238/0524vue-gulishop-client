@@ -69,7 +69,7 @@
                   <a href="#">
                     价格
                     <i 
-                    v-if="searchParams.order.split(':')[0] === '1'"
+                    v-if="searchParams.order.split(':')[0] === '2'"
                     class="iconfont" :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"></i>
                   </a>
                  
@@ -180,7 +180,7 @@ export default {
         // 排序标志 1  代表综合排序   2代表价格排序
         // desc 代表降序 asc代表升序
         // 数据决定排序规则 点击--页面变化---数据变化
-        order: "2:desc",
+        order: "1:desc",
         pageNo: 1,
         pageSize: 2,
 
