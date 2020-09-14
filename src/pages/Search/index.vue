@@ -127,8 +127,18 @@
               </li>
             </ul>
           </div>
+          <!-- 分页器
+          1.显示当前页页码  父组件当中 父子通信          2.总的页码  计算(每页的数量  总数total 父组件中(goodsListInfo))
+          3.总数total 父组件中(goodsListInfo)
+          4.连续页数 (根据当前页码不一样 连续页码的起始和结束不一样-->
 
-          <pagination></pagination>
+          <!-- 父组件需要分页子组件传递的四个数据 -->
+          <pagination
+            :currentPageNum="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="goodsListInfo.total"
+            :continueNum="5"
+          ></pagination>
         </div>
       </div>
     </div>
@@ -136,7 +146,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "Search",
@@ -160,7 +170,7 @@ export default {
         // 数据决定排序规则 点击--页面变化---数据变化
         order: "1:desc",
         pageNo: 1,
-        pageSize: 2,
+        pageSize: 1,
 
         props: [],
         trademark: "",
@@ -329,6 +339,9 @@ export default {
   // attrsList attrsList 两个数据是子组件需要展示的,到子组件当中去获取,可以避免组件通信
 
   computed: {
+    ...mapState({
+      goodsListInfo: (state) => state.search.goodsListInfo,
+    }),
     ...mapGetters(["goodsList"]), //父组件search当中只需要拿到商品列表去展示
 
     // 计算sortFlag 和 sortType的值

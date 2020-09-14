@@ -15,13 +15,38 @@
     <button>9</button>
     <button>下一页</button>
 
-    <button style="margin-left: 30px">共 60 条</button>
+    <button style="margin-left: 30px">共 {{total}} 条</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Pagination",
+  //   接收数据
+  // props:['currentPageNum'] 1.数组写法 最简单 但是缺点没法制定数据类型
+
+  // props:{              2.对象的简便写法 它可以指定数据类型 严格了一些 但是还是不够严格
+  //     currentPageNum:Number
+  // }
+
+  //   props:{            3.复杂写法
+  //       currentPageNum:{
+  //         type:Number,
+  //         default:1
+  //       }
+  //   }
+  props: {
+    currentPageNum: {
+      type: Number,
+      default: 1,
+    },
+    pageSize: Number,
+    total: Number,
+    continueNum: {
+      type: Number,
+      required: true,
+    },
+  },
 };
 </script>
 
