@@ -18,7 +18,7 @@
     <button>7</button>
 
     <button>···</button>
-    <button>{{totalPageNumgit}}</button>
+    <button>{{totalPageNum}}</button>
     <button>下一页</button>
 
     <button style="margin-left: 30px">共 {{total}} 条</button>
@@ -85,7 +85,7 @@ export default {
                 // end = continueNum;
             }
 
-            if(end >= totalPageNum ){
+            if( end>= totalPageNum ){
                 // 右侧边界修正
                 disNum = end - totalPageNum;
                 start -= disNum;
