@@ -322,8 +322,10 @@ export default {
     // 点击综合价格进行排序
     sortGoods(sortFlag) {
       // 拿到原本数据当中的排序标志和排序类型
-      let originSortFlag = this.searchParams.order.split(":")[0];
-      let originSortType = this.searchParams.order.split(":")[1];
+      // let originSortFlag = this.searchParams.order.split(":")[0];
+      let originSortFlag = this.sortFlag;
+      // let originSortType = this.searchParams.order.split(":")[1];
+      let originSortType = this.sortType;
       let newOrder = "";
 
       // 判断sortFlag
