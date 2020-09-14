@@ -50,11 +50,11 @@
                 -->
                 <!-- 在computed中计算 -->
                 <!-- <li :class="{active:searchParams.order.split(':')[0] === '1'}"> -->
-                    <li :class="{active:sortFlag === '1'}">
+                <li :class="{active:sortFlag === '1'}">
                   <a href="javascript:;" @click="sortGoods('1')">
                     综合
-                     <!-- v-if="searchParams.order.split(':')[0] === '1'" -->
-                     <!-- searchParams.order.split(':')[1] -->
+                    <!-- v-if="searchParams.order.split(':')[0] === '1'" -->
+                    <!-- searchParams.order.split(':')[1] -->
                     <i
                       v-if="sortFlag === '1'"
                       class="iconfont"
@@ -127,39 +127,8 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted">
-                  <span>...</span>
-                </li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div>
-                <span>共10页&nbsp;</span>
-              </div>
-            </div>
-          </div>
+
+          <pagination></pagination>
         </div>
       </div>
     </div>
@@ -362,13 +331,13 @@ export default {
   computed: {
     ...mapGetters(["goodsList"]), //父组件search当中只需要拿到商品列表去展示
 
-  // 计算sortFlag 和 sortType的值
-     sortFlag(){
-      return this.searchParams.order.split(':')[0]
+    // 计算sortFlag 和 sortType的值
+    sortFlag() {
+      return this.searchParams.order.split(":")[0];
     },
-    sortType(){
-      return this.searchParams.order.split(':')[1]
-    }
+    sortType() {
+      return this.searchParams.order.split(":")[1];
+    },
   },
   // 深度监视牵扯到的是数组
   // 其实在search页面重复发送请求只能通过监视当前的路由对象,自己手动调用去发请求
