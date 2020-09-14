@@ -48,13 +48,17 @@
                   图标显示的时候是向上还是向下根据数据的排序类型决定
 
                 -->
-                <li :class="{active:searchParams.order.split(':')[0] === '1'}">
+                <!-- 在computed中计算 -->
+                <!-- <li :class="{active:searchParams.order.split(':')[0] === '1'}"> -->
+                    <li :class="{active:sortFlag === '1'}">
                   <a href="javascript:;" @click="sortGoods('1')">
                     综合
+                     <!-- v-if="searchParams.order.split(':')[0] === '1'" -->
+                     <!-- searchParams.order.split(':')[1] -->
                     <i
-                      v-if="searchParams.order.split(':')[0] === '1'"
+                      v-if="sortFlag === '1'"
                       class="iconfont"
-                      :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"
+                      :class="{iconup:sortType === 'asc',icondown:sortType === 'desc'}"
                     ></i>
                   </a>
                 </li>
@@ -68,13 +72,15 @@
                   <a href="#">评价</a>
                 </li>
 
-                <li :class="{active:searchParams.order.split(':')[0] === '2'}">
+                <!-- <li :class="{active:searchParams.order.split(':')[0] === '2'}"> -->
+                <li :class="{active:sortFlag === '2'}">
                   <a href="javascript:;" @click="sortGoods('2')">
                     价格
+                    <!-- v-if="searchParams.order.split(':')[0] === '2'" -->
                     <i
-                      v-if="searchParams.order.split(':')[0] === '2'"
+                      v-if="sortFlag === '2'"
                       class="iconfont"
-                      :class="{iconup:searchParams.order.split(':')[1] === 'asc',icondown:searchParams.order.split(':')[1] === 'desc'}"
+                      :class="{iconup:sortType === 'asc',icondown:sortType === 'desc'}"
                     ></i>
                   </a>
                 </li>
@@ -353,6 +359,14 @@ export default {
 
   computed: {
     ...mapGetters(["goodsList"]), //父组件search当中只需要拿到商品列表去展示
+
+  // 计算sortFlag 和 sortType的值
+     sortFlag(){
+      return this.searchParams.order.split(':')[0]
+    },
+    sortType(){
+      return this.searchParams.order.split(':')[1]
+    }
   },
   // 深度监视牵扯到的是数组
   // 其实在search页面重复发送请求只能通过监视当前的路由对象,自己手动调用去发请求
