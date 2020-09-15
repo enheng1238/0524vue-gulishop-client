@@ -14,7 +14,7 @@
     <img :src="defaultImg.imgUrl" />
     <div class="event" @mousemove="move"></div>
     <div class="big">
-      <img :src="defaultImg.imgUrl" />
+      <img :src="defaultImg.imgUrl" ref="bigImg"/>
     </div>
     <div class="mask" ref="mask"></div>
   </div>
@@ -45,6 +45,8 @@
       },
       move(event){
           let mask = this.$refs.mask
+          let bigImg = this.$refs.bigImg
+          
           let mouseX = event.offsetX
           let mouseY = event.offsetY
           let maskX = mouseX - mask.offsetWidth/2 
@@ -65,6 +67,10 @@
           // 设置遮罩位置
           mask.style.left = maskX + 'px'
           mask.style.top = maskY + 'px'
+
+          // 设置大图的位置
+          bigImg.style.left = -2 *maskX + 'px'
+          bigImg.style.top = -2 *maskY +  'px'
 
       }
       
