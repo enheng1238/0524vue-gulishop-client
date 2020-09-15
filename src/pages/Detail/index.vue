@@ -69,9 +69,10 @@
                 <dt class="title">{{spuSaleAttr.saleAttrName}}</dt>
                 <dd
                   changepirce="0"
-                  class="active"
+                  :class="{active:spuSaleAttrValue.isChecked === '1'}"
                   v-for="(spuSaleAttrValue,index) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
+                  @click="changeIsChecked(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)"
                 >{{spuSaleAttrValue.saleAttrValueName}}</dd>
               </dl>
             </div>
@@ -334,6 +335,10 @@ export default {
     getGoodsDetailInfo() {
       this.$store.dispatch("getGoodsDetailInfo", this.$route.params.goodsId);
     },
+    changeIsChecked(spuSaleAttrValue,spuSaleAttrValueList){
+        spuSaleAttrValueList.forEach(item => item.isChecked = '0')
+        spuSaleAttrValue.isChecked = '1'
+    }
   },
   computed: {
     ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
