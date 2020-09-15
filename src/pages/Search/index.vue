@@ -251,6 +251,7 @@ export default {
     },
     //  点击面包屑当中的× 删除参数当中的categoryName 重新发送请求
     removeCategoryName() {
+      this.searchParams.pageNo = 1;
       this.searchParams.categoryName = undefined;
       // this.getGoodsListInfo();
       // 虽然可以发请求，但是路径当中的参数不会被删除,因为路由当中的参数是没变化的,所以我们必须
@@ -267,6 +268,7 @@ export default {
     },
     // 点击面包屑当中的× 删除参数当中的keyword 重新发送请求
     removeKeyword() {
+       this.searchParams.pageNo = 1;
       this.searchParams.keyword = undefined;
       // this.getGoodsListInfo();
       this.$bus.$emit("clearKeyword");
@@ -275,11 +277,13 @@ export default {
     },
     // 点击面包屑当中的× 删除参数当中的removeTrademark 重新发送请求
     removeTrademark() {
+       this.searchParams.pageNo = 1;
       this.searchParams.trademark = undefined;
       this.getGoodsListInfo();
     },
     // 子向父传递品牌数据 按照品牌搜索
     searchForTrademark(trademark) {
+       this.searchParams.pageNo = 1;
       // 'id:name'
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`; //根据品牌搜索一定要参考文档去看参数的结构
       this.getGoodsListInfo();
@@ -296,11 +300,13 @@ export default {
       let repeat = this.searchParams.props.some((item) => item === prop);
       if (repeat) return;
 
+       this.searchParams.pageNo = 1;
       this.searchParams.props.push(prop);
       this.getGoodsListInfo();
     },
     // 删除面包屑当中的属性
     removeProp(index) {
+       this.searchParams.pageNo = 1;
       this.searchParams.props.splice(index, 1);
       this.getGoodsListInfo();
     },
@@ -324,6 +330,7 @@ export default {
         newOrder = `${sortFlag}:desc`; //默认降序
       }
       // 把新的排序规则更新然后重新发请求
+       this.searchParams.pageNo = 1;
       this.searchParams.order = newOrder;
       this.getGoodsListInfo();
     },
