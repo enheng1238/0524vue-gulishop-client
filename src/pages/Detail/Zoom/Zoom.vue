@@ -1,9 +1,20 @@
 <template>
   <div class="spec-preview">
-    <img src="../images/s1.png" />
+    <!-- 
+      a.b.c 报假错 
+      避免出现a.b.c 就是避免出现undefined
+      "TypeError: Cannot read property 'imgUrl' of undefined"
+
+      skuImageList[defaultIndex].imgUrl  []相当于.  undefined 异步那数据数据没回来 空对象 计算 this.skuInfo.skuImageList  空数组. = undefined
+      页面正常，但是报错了
+      页面正常是因为数据回来了
+      但是数据没回来的那一刹那 错误已经报出来了
+     -->
+    <!-- <img :src="skuImageList[defaultIndex].imgUrl" /> -->
+    <img :src="defaultImg.imgUrl" />
     <div class="event"></div>
     <div class="big">
-      <img src="../images/s1.png" />
+      <img :src="defaultImg.imgUrl" />
     </div>
     <div class="mask"></div>
   </div>
@@ -12,6 +23,17 @@
 <script>
   export default {
     name: "Zoom",
+    props:['skuImageList'],
+    data() {
+      return {
+        defaultIndex:0
+      }
+    },
+    computed: {
+      defaultImg(){
+        return this.skuImageList[this.defaultIndex] || {}
+      }
+    },
   }
 </script>
 

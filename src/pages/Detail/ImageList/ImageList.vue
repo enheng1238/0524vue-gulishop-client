@@ -15,6 +15,12 @@
   import Swiper from 'swiper'
   export default {
     name: "ImageList",
+    props:['skuImageList'],
+    data() {
+      return {
+        defaultIndex:0
+      }
+    },
   }
 </script>
 
