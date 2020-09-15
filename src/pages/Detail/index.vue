@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom  :skuImageList ="skuImageList" />
+          <Zoom :skuImageList="skuImageList" />
           <!-- 小图列表 -->
-          <ImageList :skuImageList ="skuImageList" />
+          <ImageList :skuImageList="skuImageList" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -78,7 +78,17 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" v-model="skuNum" />
+                <!-- 
+                  $event.target.value*1
+                  +$event.target.value
+                  将字符串转为数字
+                -->
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @change="$event.target.value*1 > 1 ? skuNum = $event.target.value*1 : skuNum = 1 "
+                />
                 <a href="javascript:" class="plus" @click="skuNum++">+</a>
                 <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum-- : skuNum = 1">-</a>
               </div>
@@ -330,8 +340,8 @@ export default {
   name: "Detail",
   data() {
     return {
-      skuNum:1
-    }
+      skuNum: 1,
+    };
   },
   mounted() {
     this.getGoodsDetailInfo();
@@ -340,17 +350,17 @@ export default {
     getGoodsDetailInfo() {
       this.$store.dispatch("getGoodsDetailInfo", this.$route.params.goodsId);
     },
-    changeIsChecked(spuSaleAttrValue,spuSaleAttrValueList){
-        spuSaleAttrValueList.forEach(item => item.isChecked = '0')
-        spuSaleAttrValue.isChecked = '1'
-    }
+    changeIsChecked(spuSaleAttrValue, spuSaleAttrValueList) {
+      spuSaleAttrValueList.forEach((item) => (item.isChecked = "0"));
+      spuSaleAttrValue.isChecked = "1";
+    },
   },
   computed: {
     ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
-    skuImageList(){
+    skuImageList() {
       // 进一步计算skuInfo 减少出现a.b.c
-      return this.skuInfo.skuImageList || []
-    }
+      return this.skuInfo.skuImageList || [];
+    },
   },
 
   components: {
