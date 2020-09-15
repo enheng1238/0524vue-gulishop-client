@@ -7,6 +7,8 @@ import home from './home'
 import user from './user'
 import search from './search'
 import detail from './detail'
+import shopcart from './shopcart'
+
 
 // 代表 存数据的地方 十多个属性 的一个对象
 const state = {}
@@ -33,7 +35,8 @@ export default new Vuex.Store({
         home,
         user,
         search,
-        detail
+        detail,
+        shopcart
     }
 })
 

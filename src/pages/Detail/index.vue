@@ -93,7 +93,7 @@
                 <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum-- : skuNum = 1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a href="javascript:" @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -354,6 +354,11 @@ export default {
       spuSaleAttrValueList.forEach((item) => (item.isChecked = "0"));
       spuSaleAttrValue.isChecked = "1";
     },
+    addShopCart(){
+        // 1.发请求
+        // 2.根据请求成功干啥
+        // 3.请求失败干啥
+    }
   },
   computed: {
     ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
