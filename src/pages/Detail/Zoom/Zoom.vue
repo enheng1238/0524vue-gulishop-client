@@ -50,6 +50,18 @@
           let maskX = mouseX - mask.offsetWidth/2 
           let maskY = mouseY - mask.offsetHeight/2
 
+          // 判断
+          if(maskX < 0){
+            maskX = 0
+          }else if(maskX > mask.offsetWidth){
+            maskX = mask.offsetWidth
+          }
+
+          if(maskY < 0){
+            maskY = 0
+          }else if(maskY > mask.offsetHeight){
+            maskY = mask.offsetHeight
+          }
           // 设置遮罩位置
           mask.style.left = maskX + 'px'
           mask.style.top = maskY + 'px'
