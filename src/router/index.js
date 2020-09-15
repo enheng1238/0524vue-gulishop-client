@@ -11,7 +11,10 @@ import routes from './routes'
 
 // 3.必须往外暴露一个路由器对象
 export default new VueRouter({
-    routes
+    routes,
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+      }
 })
 
 // 4.必须在 vue 当中注入(使用)路由器对象  在 main.js 当中去注入
