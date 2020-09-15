@@ -2,7 +2,7 @@
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(img,index) in skuImageList" :key="img.id">
-        <img :src="img.imgUrl">
+        <img :src="img.imgUrl" :class="{active:index === defaultIndex}">
       </div>
      </div>
     <div class="swiper-button-next"></div>
@@ -49,10 +49,10 @@
           padding: 1px;
         }
 
-        &:hover {
-          border: 2px solid #f60;
-          padding: 1px;
-        }
+        // &:hover {
+        //   border: 2px solid #f60;
+        //   padding: 1px;
+        // }
       }
     }
 
