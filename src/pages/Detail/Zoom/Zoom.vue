@@ -29,10 +29,20 @@
         defaultIndex:0
       }
     },
+    mounted() {
+      // 绑定事件
+      this.$bus.$on('changeDefaultIndex',this.changeDefaultIndex)
+    },
     computed: {
       defaultImg(){
         return this.skuImageList[this.defaultIndex] || {}
       }
+    },
+    methods: {
+      changeDefaultIndex(index){
+          this.defaultIndex = index
+      }
+      
     },
   }
 </script>

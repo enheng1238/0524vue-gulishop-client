@@ -27,9 +27,12 @@ export default {
   methods: {
     changeDefaultIndex(index){
       this.defaultIndex = index
+      // 
+      this.$bus.$emit('changeDefaultIndex',index)
     }
   },
 };
+// 兄弟组件 全局事件总线
 </script>
 
 <style lang="less" scoped>
