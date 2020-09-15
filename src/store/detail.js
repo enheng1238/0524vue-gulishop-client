@@ -20,7 +20,15 @@ const actions = {
 }
 // 通过state计算出来的属性数据(只有读没有写，只能使用state数据不能修改state数据)
 const getters = {
-
+    categoryView(state){
+        return state.goodsDetailInfo.categoryView || {}
+    },
+    skuInfo(state){
+        return state.goodsDetailInfo.skuInfo || {}
+    },
+    spuSaleAttrList(state){
+        return state.goodsDetailInfo.spuSaleAttrList || []
+    }
 }
 
 export default {
