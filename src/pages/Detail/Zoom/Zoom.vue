@@ -30,7 +30,7 @@
       }
     },
     mounted() {
-      // 绑定事件
+      // 绑定事件  给事件总线绑定改变下标的事件 
       this.$bus.$on('changeDefaultIndex',this.changeDefaultIndex)
     },
     computed: {
@@ -40,6 +40,7 @@
     },
     methods: {
       changeDefaultIndex(index){
+        // 改变了下标，defaultIndex被改变，默认显示的图片就会被改变
           this.defaultIndex = index
       }
       

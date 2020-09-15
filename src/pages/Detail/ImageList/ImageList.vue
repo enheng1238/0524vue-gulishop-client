@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container">
+  <div class="swiper-container" ref="imgSwiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(img,index) in skuImageList" :key="img.id">
         <img
@@ -26,11 +26,45 @@ export default {
   },
   methods: {
     changeDefaultIndex(index){
+      // 为了让自己变化橙色的框框
       this.defaultIndex = index
-      // 
+      // 通知zoom组件改变下标
       this.$bus.$emit('changeDefaultIndex',index)
     }
   },
+
+     watch: {
+    // 监视：一般监视和深度监视
+    // 监视哪个数据变化之后所执行的函数
+    // 放在这里能保证我们的bannerList内一定有数据,但是还是不能保证结构完全形成
+    skuImageList: {
+      immediate:true,//添加这个东西没意思，只是让两边的代码一样
+      handler() {
+        // Vue.nextTick() 和 vm.$nextTick() 功能一样  等待页面最近一次的更新循环完成之后再去调回调
+        this.$nextTick(() => {
+          //监视哪个数据变化之后所执行的函数
+          // 这个回调是nextTick的回调，nextTick会等待也米娜最近一次循环更新结束之后才会执行它内部传递的回调
+          // updated也可以实现,但是并不是最近一次更新,而是所有的更新都会执行这个钩子(updated)
+          new Swiper(this.$refs.imgSwiper, {
+            slidesPerView : 5,  
+            loop: true, // 循环模式选项
+
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+            },
+
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
+  },
+
 };
 // 兄弟组件 全局事件总线
 </script>

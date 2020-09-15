@@ -20,6 +20,9 @@ import TypeNav from '@/components/TypeNav'
 import SliderLoop from '@/components/SliderLoop'
 import pagination from '@/components/pagination'
 
+import "swiper/css/swiper.min.css";
+
+
 Vue.component('TypeNav',TypeNav);
 Vue.component('SliderLoop',SliderLoop);
 Vue.component('pagination',pagination);
