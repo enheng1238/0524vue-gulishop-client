@@ -62,3 +62,16 @@ export const reqGoodsListInfo = (searchParams) => {
 // reqGoodsListInfo({})  //测试必须要传一个对象
 
 // 201 请求成功 参数错误
+
+// 请求获取商品详情数据
+// skuId---goodsId
+// /api/item/{ skuId } GET
+// 参数名称	类型	是否必选	描述
+// skuId	string	Y	商品ID
+// data {}
+export const reqGoodsDetailInfo = (skuId) => {
+    return Ajax({
+        url:`/item/${skuId}`,
+        method:'get'
+    })
+}

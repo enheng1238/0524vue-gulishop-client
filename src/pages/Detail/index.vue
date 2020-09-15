@@ -352,6 +352,14 @@
 
   export default {
     name: 'Detail',
+   mounted() {
+    this.getGoodsDetailInfo();
+  },
+  methods: {
+    getGoodsDetailInfo() {
+      this.$store.dispatch("getGoodsDetailInfo", this.$route.params.goodsId);
+    },
+  },
     
     components: {
       ImageList,
