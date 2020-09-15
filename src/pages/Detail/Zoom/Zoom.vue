@@ -12,11 +12,11 @@
      -->
     <!-- <img :src="skuImageList[defaultIndex].imgUrl" /> -->
     <img :src="defaultImg.imgUrl" />
-    <div class="event"></div>
+    <div class="event" @mousemove="move"></div>
     <div class="big">
       <img :src="defaultImg.imgUrl" />
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
@@ -42,6 +42,18 @@
       changeDefaultIndex(index){
         // 改变了下标，defaultIndex被改变，默认显示的图片就会被改变
           this.defaultIndex = index
+      },
+      move(event){
+          let mask = this.$refs.mask
+          let mouseX = event.offsetX
+          let mouseY = event.offsetY
+          let maskX = mouseX - mask.offsetWidth/2 
+          let maskY = mouseY - mask.offsetHeight/2
+
+          // 设置遮罩位置
+          mask.style.left = maskX + 'px'
+          mask.style.top = maskY + 'px'
+
       }
       
     },
