@@ -138,7 +138,13 @@
             :pageSize="searchParams.pageSize"
             :total="goodsListInfo.total"
             :continueNum="5"
+            @changePageNum="changePageNum"
           ></pagination>
+          <!-- 
+
+            : 传递属性
+            @ 绑定事件
+          -->
         </div>
       </div>
     </div>
@@ -319,6 +325,11 @@ export default {
       }
       // 把新的排序规则更新然后重新发请求
       this.searchParams.order = newOrder;
+      this.getGoodsListInfo();
+    },
+    //page接收的 传过来的是谁接的就是谁
+    changePageNum(page) {
+      this.searchParams.pageNo = page;
       this.getGoodsListInfo();
     },
   },
