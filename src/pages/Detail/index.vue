@@ -354,8 +354,15 @@ export default {
       spuSaleAttrValueList.forEach((item) => (item.isChecked = "0"));
       spuSaleAttrValue.isChecked = "1";
     },
-    addShopCart(){
+    async addShopCart(){
         // 1.发请求
+        try{
+           const result = await this.$store.dispatch('addOrUpdateShopCart',{skuId:this.skuInfo.id,skuNum:this.skuNum})
+           alert('添加购物车成功，确认自动跳转至添加购物车成功页面')
+           this.$router.push('/addcartsuccess')
+        }catch(error){
+            alert('添加购物车失败'+ error.message)
+        }
         // 2.根据请求成功干啥
         // 3.请求失败干啥
     }
