@@ -1,8 +1,14 @@
+import {getUserTempId} from '@/utils/userabout'
 // 存数据的地方,多个属性的对象
-const state = {}
+const state = {
+    // 为了效率 把userTempId 存在state中一份
+    // 在state当中存储userTempId是为了效率更高一些，因为从localStorage获取比从state直接拿要慢
+    // 我们只是在项目初始化的时候直接从localStorage获取一次，然后存给state，以后要用从state直接拿
+    userTempId:getUserTempId()
+}
 
 // 直接修改数据的地,是多个方法的一个对象  方法当中不能出现 if for 异步操作
-const mutations ={}
+const mutations = {}
 
 //和用户对接的地方 也是多个方法的一个对象  发方法中可以出现 if for 异步操作
 const actions = {} 

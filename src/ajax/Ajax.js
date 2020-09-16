@@ -1,6 +1,7 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import store from '@/store'
 
 // 1.对 axios 进行二次封装
 // * 1.配置基础路径和超时限制
@@ -18,6 +19,12 @@ instance.interceptors.request.use(config => {
     // 一个函数就是一个功能
     // 1.可以在请求时添加功能
     NProgress.start();//添加进度条功能
+
+    // 请求拦截器当中为每一次ajax请求都添加用户临时标识
+    let userTempId = store.state.user.userTempId
+    if(userTempId){
+      config.headers.userTempId = userTempId
+    }
     return config;//请求拦截器最后一定要把config返回去  config 是请求报文
   }, error=> {
    
