@@ -9,7 +9,7 @@
           </div>
           <div class="right-info">
             <p class="title">小米红米 Redmi note8 手机 梦幻蓝 全网通(4GB+64GB)</p>
-            <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：2</p>
+            <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：{{skuNum}}</p>
           </div>
         </div>
         <div class="right-gocart">
@@ -24,6 +24,16 @@
 <script>
   export default {
     name: 'AddCartSuccess',
+    data() {
+      return {
+        skuInfo:{},
+        skuNum:'',
+      }
+    },
+    mounted() {
+      this.skuInfo = JSON.parse(sessionStorage.getItem('SKUINFO_KEY'))
+      this.skuNum = this.$route.query.skuNum
+    },
   }
 </script>
 

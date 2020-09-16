@@ -359,7 +359,45 @@ export default {
         try{
            const result = await this.$store.dispatch('addOrUpdateShopCart',{skuId:this.skuInfo.id,skuNum:this.skuNum})
            alert('添加购物车成功，确认自动跳转至添加购物车成功页面')
-           this.$router.push('/addcartsuccess')
+
+          // localStorage
+          /**
+           * localStorage和sessionStorage
+           * 都是前端浏览器的存储方案,本质都是小型的文件型数据库，存储数据都是字符串形式
+           * 存储据的时候，都会默认的调用数据的toString方法
+           * 如果存到是对象，一定转化为JSON
+           * 对象.toString  === [object Object]
+           * [1,2,3].toString === '1,2,3'
+           * (function fun(){}).toString   === 'function fun(){}'
+           * 
+           * 区别:
+           * localStorage永久存储,不管浏览器是关闭还是刷新都存在
+           * sessionStorage不是永久存储,关闭浏览器再打开就没了
+           * 
+           * 它们都有四个API
+           * 怎么做：
+           * localStorage.setItem('键',值)  设置和修改
+           * localStorage.getItem('键')   读取
+           * localStorage.removeItem('键')  删除某一个
+           * localStorage.clear()   删除所有
+           * 
+           * localStorage本质上是一个小型的数据库
+           *    1.解决cookie的不足
+           * 
+           * 序列化JSON 就是把一个对象转化为JSON  JSON.stringify()
+           * 反序列化 就是把JSON反过来变成一个对象 JSON.parser()
+           * JSON.stringify()
+           * JSON.parser()
+           */
+
+          // 在跳转之前需要给添加成功页面带过去两个参数
+          // 一个是skuNum,简单数据可以路由直接传递
+          // 还有一个是商品的详情信息，它比较复杂，路由传参不方便，那么我们可以考虑存储方案
+
+          sessionStorage.setItem('SKUINFO_KEY',JSON.stringify(this.skuInfo))
+
+          //  传递参数要看下一个页面用到没有,用到了就要下岗方法传过来
+           this.$router.push('/addcartsuccess?skuNum='+this.skuNum)
         }catch(error){
             alert('添加购物车失败'+ error.message)
         }
