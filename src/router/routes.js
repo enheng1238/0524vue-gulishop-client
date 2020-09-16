@@ -4,14 +4,15 @@ import Register from '@/pages/Register'
 import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
-
-
-
-
-
+import ShopCart from '@/pages//ShopCart'
 
 
 export default [ //存多个一般用数组 四个路由组件对应四个路由  /代表根路径
+    {
+        path:'/shopcart',
+        component: ShopCart,        //注册路由组件
+      
+    },
     {
         path:'/addcartsuccess',
         component: AddCartSuccess,        //注册路由组件
