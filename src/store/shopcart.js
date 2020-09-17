@@ -1,4 +1,4 @@
-import {reqAddOrUpdateShopCart,reqShopCartList} from '@/api'
+import {reqAddOrUpdateShopCart,reqShopCartList, reqUpdateCartIsChecked} from '@/api'
 //存数据的地方 多个属性的对象
 const state = {
     shopCartList : []
@@ -45,6 +45,14 @@ const actions = {
         const result = await reqShopCartList()
         if(result.code === 200){
             commit('RECEIVESHOPCARTLIST',result.data)
+        }
+    },
+    async updateCartIsChecked({commit},{skuId,isChecked}){
+        const result = await reqUpdateCartIsChecked(skuId,isChecked)
+        if(result.code === 200){
+            return 'ok'
+        }else{
+            return Promise.reject(new Error('faild'))
         }
     }
 

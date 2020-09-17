@@ -96,3 +96,15 @@ export const reqShopCartList = () => {
         method:'get'
     })
 }
+
+// 切换商品的选中状态
+// /api/cart/checkCart/{skuID}/{isChecked}
+// get
+// data :null
+
+export const reqUpdateCartIsChecked = (skuId,isChecked) => {
+    return Ajax({
+        url:`/cart/checkCart/${skuId}/${isChecked}`,
+        method:'get'
+    })
+}

@@ -13,7 +13,7 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="(cart,index) in shopCartList" :key="cart.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="cart.isChecked" />
+            <input type="checkbox" name="chk_list" :checked="cart.isChecked" @click="changeIsChecked(cart)" />
           </li>
           <li class="cart-list-con2">
             <img :src="cart.imgUrl" />
@@ -89,7 +89,7 @@ export default {
 
    async changeCartNum(cart,disNum){
       if(disNum + cart.skuNum < 1){
-        disNum = 1 - cart.skuNum  //最少得是1   
+        disNum = 1 - cart.skuNum  //最少得是1   disNum 是修改的数量 是差值
       }
       try{
         await this.$store.dispatch('addOrUpdateShopCart',{skuId:cart.skuId,skuNum:disNum})
@@ -97,7 +97,17 @@ export default {
       }catch(error){
         alert('修改购物车商品数量失败',eeror.message)
       }
-     
+    },
+
+    async changeIsChecked(cart){
+      try{
+        await this.$store.dispatch('updateCartIsChecked',{skuId:cart.skuId,isChecked:cart.isChecked?0:1})
+        this.getShopCartList()
+        // alert('修改购物车选中状态成功');
+      }catch(error){
+        alert('修改购物车商品选中状态失败',error.message)
+      }
+      
     }
   },
   computed: {
