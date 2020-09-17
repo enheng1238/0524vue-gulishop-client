@@ -41,7 +41,7 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox">
+        <input class="chooseAll" type="checkbox" v-model="isAllCheck">
         <span>全选</span>
       </div>
       <div class="option">
@@ -111,7 +111,21 @@ import { mapActions, mapState } from 'vuex'
           }
           return prev
         },0)
+      },
+
+      isAllCheck:{
+        /**
+         * 如果只有get没有set 可以简写成函数的形式
+         * 如果get和set都有,只能写成对象的形式
+         */
+        get(){
+           return this.shopCartList.every(item => item.isChecked) && (this.shopCartList.length >0)
+        },
+        set(){
+
+        }
       }
+      
     },
   }
 </script>
