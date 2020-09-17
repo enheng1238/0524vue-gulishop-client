@@ -26,10 +26,12 @@ instance.interceptors.request.use(config => {
       config.headers.userTempId = userTempId
     }
     return config;//请求拦截器最后一定要把config返回去  config 是请求报文
-  }, error=> {
-   
-    return Promise.reject(error);
   });
+
+  // , error=> {
+   
+  //   return Promise.reject(error);
+  // }
 
 // * 3.返回的响应不再需要从data属性当中拿数据,而是响应就是我们要的数据 response.data-->data  (请求拦截器和响应拦截器)
 instance.interceptors.response.use(response => {
