@@ -25,6 +25,12 @@ instance.interceptors.request.use(config => {
     if(userTempId){
       config.headers.userTempId = userTempId
     }
+
+    let token = store.state.user.userInfo.token
+    if(token){
+      config.headers.token = token
+    }
+    
     return config;//请求拦截器最后一定要把config返回去  config 是请求报文
   });
 
