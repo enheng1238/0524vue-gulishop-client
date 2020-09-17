@@ -52,7 +52,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="javascript:;" @click="deleteAllCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -117,9 +117,22 @@ export default {
           this.getShopCartList()
       }catch(error){
         alert('删除购物车商品(单个)失败'+ error.message)
-      }
-    
+      } 
     },
+
+// deleteAllCart
+  async deleteAllCart(){
+      // this.$store.dispatch('deleteAllCart') 就是在调用actions当中的deleteAllCart
+      // 而this.$store.dispatch('deleteAllCart') 是函数调用表达式,它的值就是actions当中deleteAllCart的返回值
+      // actions当中的deleteAllCart的返回值就是Promise.all返回的哪个promise
+      try{
+         const result = await this.$store.dispatch('deleteAllCart')
+         alert('删除选中(所有)的购物车成功')
+         this.getShopCartList()
+      }catch(error){
+        alert('删除选中(所有)的购物车失败'+error.message)
+      }
+  }
   },
   computed: {
     ...mapState({

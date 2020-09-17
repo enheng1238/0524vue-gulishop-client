@@ -74,8 +74,26 @@ const actions = {
         }else{
             return Promise.reject(new Error('falid'))
         }
+    },
+    deleteAllCart({state,dispatch}){
+        // dispatch不一定是在vue中dispatch的,也可以在actions中dispatch给另一个actions
+        /**
+         * Promise.all是一个方法
+         * 参数:    要求是一个 promise对象的 数组,这个数组里面必须都是promise对象
+         * 返回值:  返回是一个promise  promise状态成功 结果就是 promise数组当中每个promise成功的结果组成的数组
+         *          promise失败 结果就是promise数组当中第一个失败的promise失败的原因
+         * 功能:    让多个promise一起执行,真正执行的时候是有顺序的(数组内的先后)，但是这几个promise谁先结束不清楚
+         * 
+         */
+        let promises = []
+        state.shopCartList.forEach(item => {
+            
+            if(!item.isChecked) return //不为真就不删
+            const promise = dispatch('deleteCart',item.skuId)
+            promises.push(promise)
+        })
+        return Promise.all(promises)
     }
-
 }
 // 通过state计算出来id属性数据(只有读没有写,只能使用state数据不能修改state数据)
 const getters = {
