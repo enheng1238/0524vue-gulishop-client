@@ -1,4 +1,4 @@
-import { reqUserLogin, reqUserRegister } from '@/api'
+import { reqUserLogin, reqUserLogout, reqUserRegister } from '@/api'
 import {getUserTempId} from '@/utils/userabout'
 // 存数据的地方,多个属性的对象
 const state = {
@@ -12,8 +12,17 @@ const state = {
 
 // 直接修改数据的地,是多个方法的一个对象  方法当中不能出现 if for 异步操作
 const mutations = {
+    // 接收
     RECEIVEUSERINFO(state,userInfo){
         state.userInfo = userInfo
+    },
+
+    // 清空
+    // actions中不能直接修改数据 需要提交给mutation去修改数据
+    RESETUSERINFO(state){
+        state.userInfo ={
+
+        }
     }
 }
 
@@ -39,6 +48,20 @@ const actions = {
           }else{
               return Promise.reject(new Error('faild'))
           }
+      },
+
+      async userLogout({commit}){
+        const result = await reqUserLogout()
+        if(result.code === 200){
+            // 清空state当中用户数据
+            commit('RESETUSERINFO')
+            // 清空localStorage中的用户数据
+            localStorage.removeItem('USERINFO_KEY')
+            // 清空完成跳转到首页
+            return 'ok'
+        }else{
+            return Promise.reject(new Error('faild'))
+        }
       }
 
 

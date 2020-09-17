@@ -11,11 +11,11 @@
             <a href="javascript:;">{{$store.state.user.userInfo.name}}</a>
             <!-- <a href="###">登录</a> -->
             <!-- <router-link to="/register" class="register">免费注册</router-link> -->
-            <a href="javascript:;" class="register" >退出登录</a>
+            <a href="javascript:;" class="register" @click="logout">退出登录</a>
             <!-- <a href="###" class="register">免费注册</a> -->
           </p>
 
-           <p v-else>
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <!-- <a href="###">登录</a> -->
@@ -114,10 +114,20 @@ export default {
       }
       // 判断它是从home页中过来的还是从search页中过来的
       // 判断当前路由路径是什么,如果是home,那么我们就push,如果不是home那就replace
-      if (this.$route.path !== "./home") {
+      if (this.$route.path !== "/home") {
         this.$router.replace(location);
       } else {
         this.$router.push(location); //路由器对象有push()和replace()
+      }
+    },
+
+    async logout() {
+      try {
+        await this.$store.dispatch("userLogout");
+        alert("退出登录成功");
+        // this.$router.push('/');
+      } catch (error) {
+        alert("退出登录失败" + error.message);
       }
     },
   },
