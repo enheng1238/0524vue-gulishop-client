@@ -51,10 +51,10 @@
       </div>
       <div class="money-box">
         <div class="chosed">已选择
-          <span>0</span>件商品</div>
+          <span>{{checkedNum}}</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">0</i>
+          <i class="summoney">{{allMoney}}</i>
         </div>
         <div class="sumbtn">
           <a class="sum-btn" href="###" target="_blank">结算</a>
@@ -81,7 +81,37 @@ import { mapActions, mapState } from 'vuex'
     computed: {
       ...mapState({
         shopCartList: state => state.shopcart.shopCartList
-      })
+      }),
+      
+      checkedNum(){
+        // 统计 reduce  数组的方法 
+        /**
+         * 函数的三要素：功能 参数 返回值
+         * reduce
+         * 功能：统计数组当中符合条件的项  计算总数或者其他
+         * 参数：第一个是一个回调函数，回调函数当中又有四个参数，一般写前三个(上一次统计的值,每一项,每一项的下标,数组本身)
+         * 第二个参数代表统计的初始值,循环数组的第一项上一次统计的值拿的就是统计的初始值
+         *  this.shopCartList.reduce((prev,item,index)=>{
+         *
+         *   },0)
+         * 
+         * 返回值: 统计完成后的结果，也就是最后一次统计的结果
+         */
+        return this.shopCartList.reduce((prev,item)=>{
+          if(item.isChecked){
+            prev += item.skuNum;
+          }
+          return prev
+        },0)
+      },
+      allMoney(){
+        return this.shopCartList.reduce((prev,item)=>{
+          if(item.isChecked){
+            prev += item.skuNum * item.skuPrice
+          }
+          return prev
+        },0)
+      }
     },
   }
 </script>
