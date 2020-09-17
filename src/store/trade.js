@@ -25,7 +25,14 @@ const actions = {
 
 
 // 通过state计算出来的属性数据(只有读没有写 只能使用state数据不能修改state数据) 
-const getters ={}
+const getters ={
+    detailArrayList(state){
+        return state.tradeInfo.detailArrayList || []
+    },
+    userAddressList(state){
+        return state.tradeInfo.userAddressList || []
+    }
+}
 
 export default {
     state,
