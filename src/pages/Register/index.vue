@@ -10,23 +10,44 @@
       </h3>
       <div class="content">
         <label>手机号:</label>
-        <input type="text" placeholder="请输入你的手机号">
+        <input type="text" placeholder="请输入你的手机号" v-model="mobile">
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="content">
         <label>验证码:</label>
-        <input type="text" placeholder="请输入验证码">
-        <img ref="code" src="http://182.92.128.115/api/user/passport/code" alt="code">
+        <input type="text" placeholder="请输入验证码" v-model="code">
+        <!-- <img ref="code" src="http://182.92.128.115/api/user/passport/code" alt="code"> -->
+        <img ref="code" src="/api/user/passport/code" alt="code" @click="changeCode">
+        <!-- 
+          下面两种获取验证码的方式都是可以返回正常数据的
+          第一种通过src直接发送到目标服务器,利用src的特性,解决跨域，可以认为没有跨域
+          第二种通过代理服务器转发到目标服务器,解决跨域问题
+          下边的第二种图片验证码是有效的,可以正常注册
+          下面第一种方式图片验证码,无效,注册的时候报错，验证码不正确
+
+          <img ref="code" src="http://182.92.128.115/api/user/passport/code" alt="code">
+          src href 这两个东西是天然解决跨域的
+          不跨域
+          如果发送ajax请求一定跨域 为什么不跨域了 -- 因为它写在了src里边
+          不能用 有问题
+          如果是通过src过去的,虽然能够拿到 但是后台会让他直接失效
+
+          <img ref="code" src="/api/user/passport/code" alt="code">
+          代理服务器配的api开头  api 代理
+          往本地发 路径以api开头 代理帮忙解决跨域
+          跨域 
+         -->
+
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="content">
         <label>登录密码:</label>
-        <input type="text" placeholder="请输入你的登录密码">
+        <input type="text" placeholder="请输入你的登录密码" v-model="password">
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="content">
         <label>确认密码:</label>
-        <input type="text" placeholder="请输入确认密码">
+        <input type="text" placeholder="请输入确认密码" v-model="password2">
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="controls">
@@ -60,7 +81,24 @@
 
 <script>
   export default {
-    name: 'Register'
+    name: 'Register',
+    data() {
+      /**
+       * 验证码
+       * 
+       */
+      return {
+        mobile:'',
+        password:'',
+        password2:'',
+        code:''
+      }
+    },
+    methods: {
+      changeCode(){
+        this.$refs.code.src = '/api/user/passport/code'
+      }
+    },
   }
 </script>
 
