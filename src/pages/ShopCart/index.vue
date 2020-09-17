@@ -39,7 +39,7 @@
             <span class="sum">{{cart.skuPrice * cart.skuNum}}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="javascript:;" class="sindelet" @click="deleteCart(cart)">删除</a>
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -98,7 +98,8 @@ export default {
         alert('修改购物车商品数量失败',eeror.message)
       }
     },
-
+    
+// 修改单个购物车选中状态
      async changeIsChecked(cart){
       try {
         await this.$store.dispatch('updateCartIsChecked',{skuId:cart.skuId,isChecked:cart.isChecked ? 0:1})
@@ -106,6 +107,18 @@ export default {
       } catch (error) {
         alert('修改购物车商品选中状态失败',error.message)
       }
+    },
+
+// 删除单个购物车
+    async deleteCart(cart){
+      try{
+          await this.$store.dispatch('deleteCart',cart.skuId)
+          alert('删除购物车商品(单个)成功')
+          this.getShopCartList()
+      }catch(error){
+        alert('删除购物车商品(单个)失败'+ error.message)
+      }
+    
     },
   },
   computed: {
@@ -154,6 +167,7 @@ export default {
           this.shopCartList.length > 0
         );
       },
+      // 修改多个的购物车选中状态
       async set(val) {
         /**
          * promise.all()

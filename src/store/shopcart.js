@@ -1,4 +1,4 @@
-import {reqAddOrUpdateShopCart,reqShopCartList, reqUpdateCartIsChecked} from '@/api'
+import {reqAddOrUpdateShopCart,reqDeleteCart,reqShopCartList, reqUpdateCartIsChecked} from '@/api'
 //存数据的地方 多个属性的对象
 const state = {
     shopCartList : []
@@ -66,6 +66,14 @@ const actions = {
             promises.push(promise)//把返回的promise存到数组中
         })
         return Promise.all(promises) //拿的是每一个Promise成功的结果组成的数组
+    },
+    async deleteCart({commit},skuId){
+        const result = await reqDeleteCart(skuId)
+        if(result.code === 200){
+            return 'ok'
+        }else{
+            return Promise.reject(new Error('falid'))
+        }
     }
 
 }

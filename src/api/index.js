@@ -108,3 +108,16 @@ export const reqUpdateCartIsChecked = (skuId,isChecked) => {
         method:'get'
     })
 }
+
+// 请求删除购物车
+// /api/cart/deleteCart/{skuId}
+// DELETE
+// 参数 skuId
+// data null
+// delete put get post   restful API 
+export const reqDeleteCart = (skuId) => {
+    return Ajax({
+        url:`/cart/deleteCart/${skuId}`,
+        method:'delete'
+    })
+}
