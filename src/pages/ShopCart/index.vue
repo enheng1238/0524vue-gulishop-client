@@ -13,7 +13,7 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="(cart,index) in shopCartList" :key="cart.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list">
+            <input type="checkbox" name="chk_list" :checked="cart.isChecked">
           </li>
           <li class="cart-list-con2">
             <img :src="cart.imgUrl">
