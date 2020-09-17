@@ -4,10 +4,28 @@ import Register from '@/pages/Register'
 import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
-import ShopCart from '@/pages//ShopCart'
+import ShopCart from '@/pages/ShopCart'
+import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
 
 
 export default [ //存多个一般用数组 四个路由组件对应四个路由  /代表根路径
+    {
+        path:'/trade',
+        component: Trade,        //注册路由组件
+      
+    },
+    {
+        path:'/pay',
+        component: Pay,        //注册路由组件
+      
+    },
+    {
+        path:'/paysuccess',
+        component: PaySuccess,        //注册路由组件
+      
+    },
     {
         path:'/shopcart',
         component: ShopCart,        //注册路由组件
