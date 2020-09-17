@@ -33,7 +33,7 @@ const actions = {
               commit('RECEIVEUSERINFO',result.data)
               return 'ok'
           }else{
-              return Promise.reject(new Error('falid'))
+              return Promise.reject(new Error('faild'))
           }
       }
 
