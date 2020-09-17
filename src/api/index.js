@@ -121,3 +121,14 @@ export const reqDeleteCart = (skuId) => {
         method:'delete'
     })
 }
+
+// 请求注册用户  /api/user/passport/register
+// post 
+// data null
+export const reqUserRegister = (userInfo) => {
+    return Ajax({
+        url:'/user/passport/register',
+        method:'post',
+        data:userInfo
+    })
+}
