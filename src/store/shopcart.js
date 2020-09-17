@@ -54,6 +54,18 @@ const actions = {
         }else{
             return Promise.reject(new Error('faild'))
         }
+    },
+    updateAllCartIsChecked({state,dispatch},isChecked){
+        //Vue store 实例  --- context
+        // dispatch 不一定非得在组件中dispatch 我也可以在通过某一个actions去dispatch另一个actions
+        let promises = []
+        state.shopCartList.forEach(item => {
+            if(item.isChecked === isChecked) return
+            const promise = dispatch('updateCartIsChecked',{skuId:item.skuId,isChecked:isChecked})  //依赖updateCartIsChecked去干活 
+            // dispatch 返回的是一个promise
+            promises.push(promise)//把返回的promise存到数组中
+        })
+        return Promise.all(promises) //拿的是每一个Promise成功的结果组成的数组
     }
 
 }

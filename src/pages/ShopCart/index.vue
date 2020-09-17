@@ -99,16 +99,14 @@ export default {
       }
     },
 
-    async changeIsChecked(cart){
-      try{
-        await this.$store.dispatch('updateCartIsChecked',{skuId:cart.skuId,isChecked:cart.isChecked?0:1})
+     async changeIsChecked(cart){
+      try {
+        await this.$store.dispatch('updateCartIsChecked',{skuId:cart.skuId,isChecked:cart.isChecked ? 0:1})
         this.getShopCartList()
-        // alert('修改购物车选中状态成功');
-      }catch(error){
+      } catch (error) {
         alert('修改购物车商品选中状态失败',error.message)
       }
-      
-    }
+    },
   },
   computed: {
     ...mapState({
@@ -156,7 +154,27 @@ export default {
           this.shopCartList.length > 0
         );
       },
-      set() {},
+      async set(val) {
+        /**
+         * promise.all()
+         * 是一个函数,所需要的参数是一个数组，数组里都是 promise 不管是成功还是失败
+         * 每个promise都成功才成功，有一个失败就失败
+         * 返回值是一个promise
+         * 返回值的结果
+         * 成功 是返回的每个promise成功的结果组成的数组 ['ok','ok','ok','ok']
+         * 失败 第一个失败promise的原因
+         * 
+         */
+        // 这个值就是 Promise.all 的返回值  Promise.all的返回值是一个promise
+        try{
+           const result =  await this.$store.dispatch('updateAllCartIsChecked', val ? 1 : 0)
+          //  console.log(result)
+
+          this.getShopCartList()
+        }catch(error){
+          alert('修改购物车选中状态失败', error.message)//error拿的是第一个失败的原因
+        }
+      },
     },
   },
 };
