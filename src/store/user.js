@@ -6,7 +6,8 @@ const state = {
     // 在state当中存储userTempId是为了效率更高一些，因为从localStorage获取比从state直接拿要慢
     // 我们只是在项目初始化的时候直接从localStorage获取一次，然后存给state，以后要用从state直接拿
     userTempId:getUserTempId(),
-    userInfo:{}
+    // 自动登录 就是把用户的信息给保存下来 
+    userInfo:JSON.parse(localStorage.getItem('USERINFO_KEY')) || {} ,
 }
 
 // 直接修改数据的地,是多个方法的一个对象  方法当中不能出现 if for 异步操作
@@ -30,7 +31,10 @@ const actions = {
       async userLogin({commit},userInfo){
           const result = await reqUserLogin(userInfo)
           if(result.code === 200){
+                //   修改state当中userInfo
               commit('RECEIVEUSERINFO',result.data)
+        //   存储登录成功用户信息
+              localStorage.setItem('USERINFO_KEY',JSON.stringify(result.data))
               return 'ok'
           }else{
               return Promise.reject(new Error('faild'))
