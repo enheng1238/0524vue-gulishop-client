@@ -132,3 +132,17 @@ export const reqUserRegister = (userInfo) => {
         data:userInfo
     })
 }
+
+// 请求登录用户
+// /api/user/passport/login
+// post
+// mobile
+// password
+// data {}
+export const reqUserLogin = (userInfo) => {
+    return Ajax({
+        url:'/user/passport/login',
+        method:'post',
+        data:userInfo
+    })
+}
