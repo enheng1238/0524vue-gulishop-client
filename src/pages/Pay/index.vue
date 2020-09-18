@@ -125,12 +125,30 @@
 </template>
 
 <script>
+/**
+ * 支付流程：
+ *  1.生成了二维码
+ *  2.messageBox展示了二维码
+ *  3.刚展示完二维码:立马就需要发送请求(这个请求要连续的去发) 隔2秒发一次,去查询支付状态是否支付完成
+ *  4.后台会在发请求后返回支付状态码  支付状态码如果是205代表还在支付中,如果是200代表支付成功
+ *  5.根据返回的支付状态码去决定后续操作
+ *          1)如果在查询回来是200的时候，我们要自动跳转到支付成功页面
+ *          2)把这个状态码还要保存在data当中,用来去作为用户点击已成功支付按钮的判断依据
+ *  6.去单独处理点击我已成功支付或者支付遇到问题按钮的逻辑
+ *          1)点击我已成功支付,那么要根据data当中存储的状态码判断是否真的支付完成,
+ *              如果完成跳转到支付成功页面,关闭messageBox
+ *              如果没有完成,停在当前页面并提示,不关闭messageBox
+ * 
+ *          2)点击支付遇到问题,那么我们要提示用户找谁处理,停止往后台发请求,关闭messageBox
+ * 
+ */
 import QRCode from "qrcode";
 export default {
   name: "Pay",
   data() {
     return {
       orderInfo: {},
+      orderStatus:0
     };
   },
   mounted() {
@@ -151,6 +169,7 @@ export default {
       // 1.生成二维码图片的url
       try {
         let imgUrl = await QRCode.toDataURL(this.orderInfo.codeUrl);
+
         // console.log(imgUrl); //img的路径
         // 2.弹出消息盒子,展示二维码
         this.$alert(
@@ -165,6 +184,44 @@ export default {
             center: true, //是否居中布局
           }
         );
+
+        // 3.发请求连续发送去查询状态码
+        // 定时器一旦设置，立马会返回这个定时器的id编号,它的任务会交给管理模块管理
+        if(!this.timer){
+          // 保证同时一个订单只开启一个定时器
+          this.timer = setInterval(async () => {
+            // 如果用await，那await上边一定是个函数 把async放到离await最近的上边的函数
+            // 4.发请求 拿状态码
+            // 5.如果状态码成功自动跳转到支付成功
+
+            const result = await this.$API.reqOrderStatus(this.orderInfo.orderId)
+            if(result.code === 200){
+              // 把状态码保存一下 后续点击按钮判断
+              this.orderStatus = 200
+              // 清除循环定时器
+              clearInterval(this.timer)//清除管理模块中的异步任务
+              this.timer = null //保证下次还是false 否则下次定时器就开不起来了
+              /**
+               * clearInterval(this.timer)  循环定时器停了，编号还在
+               * 如果你设置一个定时器，它返回的是一个定时器的id,也就是它的编号
+               * 当你设置一个定时器的时候       定时器管理模块 
+               * 定时器会把它的任务交给定时器模块管理  定时器的编号被永远存在变量里边
+               * 当你clearInterval || clearTimeOut的时候 它只是从管理器模块中把定时器的异步任务给清了，但是这个变量当中的编号被永久保存
+               * setTimeOut  ---- clearTimeOut
+               * setInterval --- clearInterval
+               * clearTimeOut clearInterval 都可以清定时器
+               * 
+               */
+              // 关闭messagebox
+                this.$msgbox.close()//关闭当前的消息盒子
+              // 跳转到支付成功页面
+              this.$router.push('/paysuccess')
+            }
+
+          },2000);
+        }
+        
+
       } catch (error) {
         this.$message.error("生成微信二维码失败");
       }
