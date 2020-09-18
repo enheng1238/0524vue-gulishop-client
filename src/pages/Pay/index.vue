@@ -8,7 +8,7 @@
         </h4>
         <div class="paymark">
           <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>{{$route.query.orderId}}</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥{{orderInfo.totalFee}}</em></span>
         </div>
       </div>
       <div class="checkout-info">
@@ -84,6 +84,24 @@
 <script>
   export default {
     name: 'Pay',
+    data() {
+      return {
+        orderInfo:{}
+      }
+    },
+    mounted() {
+      // 发送请求获取支付信息
+      this.getOrderInfo()
+    },
+    methods: {
+      async getOrderInfo(){
+        // this.$API.reqPayInfo(this.$route.query.orderId)
+        const result = await this.$API.reqPayInfo(this.$route.query.orderId)
+        if(result.code === 200 ){
+          this.orderInfo = result.data
+        }
+      }
+    },
   }
 </script>
 

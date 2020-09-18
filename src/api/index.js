@@ -179,3 +179,16 @@ export const reqSubmitOrder = (tradeNo,tradeInfo) => {
         data:tradeInfo
     })
 }
+
+// 请求获取支付信息
+// /api/payment/weixin/createNative/{orderId}
+// get
+// orderId
+// data  {}
+
+export const reqPayInfo = (orderId) => {
+    return Ajax({
+        url: `/payment/weixin/createNative/${orderId}`,
+        method:'get'
+    })
+}
