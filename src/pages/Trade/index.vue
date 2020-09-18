@@ -12,16 +12,6 @@
         </p>
       </div>
      
-     
-     <!-- <div class="address clearFix">
-        <span class="username selected">张三</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">15010658793</span>
-          <span class="s3">默认地址</span>
-        </p>
-      </div> -->
-     
       <div class="line"></div>
       <h5 class="pay">支付方式</h5>
       <div class="address clearFix">
@@ -72,8 +62,8 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <!-- <b><i>{{tradeInfo.totalNum}}</i>件商品，总商品金额</b> -->
-          <span>¥5399.00</span>
+          <b><i>{{tradeInfo.totalNum}}</i>件商品，总商品金额</b>
+          <span>¥{{tradeInfo.totalAmount}}</span>
         </li>
         <li>
           <b>返现：</b>
@@ -86,7 +76,7 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:　<span>¥5399.00</span></div>
+      <div class="price">应付金额:　<span>¥{{tradeInfo.totalAmount}}</span></div>
       <div class="receiveInfo">
         寄送至:
         <span>北京市昌平区宏福科技园综合楼6层</span>
@@ -119,9 +109,9 @@ import { mapGetters, mapState } from 'vuex'
     },
     computed: {
       ...mapGetters(['detailArrayList','userAddressList']),
-      // ...mapState({
-      //   trade
-      // })
+      ...mapState({
+        tradeInfo:state => state.trade.tradeInfo
+      })
     },
   }
 </script>
