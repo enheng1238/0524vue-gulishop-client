@@ -182,8 +182,31 @@ export default {
             confirmButtonText: "我已成功支付", //确定按钮的文本内容
             showClose: true, //MessageBox 是否显示右上角关闭按钮
             center: true, //是否居中布局
+            beforeClose:(action, instance, done) => {
+              // this 内部的this才是外部的this
+              if(action === 'confirm'){
+                  // 点击了确认按钮
+                  if(this.orderStatus !== 200){
+                      this.$message.info('请确保支付成功')
+                  }
+              }else if(action === 'cancel'){
+                  // 点击了取消按钮
+                  this.$message.success('请联系尚硅谷前台小姐姐')
+                  clearInterval(this.timer)
+                  this.timer = null
+                  done()
+              }
+            }
+            // MessageBox 关闭前的回调，会暂停实例的关闭
           }
-        );
+        )
+        // then内部传递的回调处理的是点击确认按钮的逻辑
+         // catch内部传递的回调处理的是点击取消按钮的逻辑
+        //  这两个逻辑无论点哪个按钮,最终都会强制的关闭我们的messageBox
+        // 加了这两个回调 (in promise) cancel的错误就没了
+        .then(()=>{})
+       
+        .catch(()=>{})
 
         // 3.发请求连续发送去查询状态码
         // 定时器一旦设置，立马会返回这个定时器的id编号,它的任务会交给管理模块管理
