@@ -65,7 +65,8 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <!-- <router-link class="btn" to="/paysuccess">立即支付</router-link> -->
+          <a href="javascript:;" class="btn" @click="pay">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -100,6 +101,12 @@
         if(result.code === 200 ){
           this.orderInfo = result.data
         }
+      },
+
+       pay() {
+        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', '请使用微信扫码支付', {
+          dangerouslyUseHTMLString: true
+        });
       }
     },
   }

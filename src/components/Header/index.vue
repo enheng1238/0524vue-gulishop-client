@@ -7,8 +7,8 @@
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
 
-          <el-button type="primary" icon="el-icon-plus" size="mini" ></el-button>
-          <el-tag>标签</el-tag>
+          <!-- <el-button type="primary" icon="el-icon-plus" size="mini" ></el-button>
+          <el-tag>标签</el-tag> -->
 
           <p v-if="$store.state.user.userInfo.name">
             <!-- <router-link to="/login">登录</router-link> -->

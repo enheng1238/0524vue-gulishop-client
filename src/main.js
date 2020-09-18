@@ -20,6 +20,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)  //use 代表在声明使用插件
 */
 
+/*
 // element-ui 按需引入
 // 1.下载一个babel的插件
 // 2.在babel.config.js当中配置插件
@@ -30,6 +31,15 @@ Vue.use(Button)
 Vue.use(Tag)
 
 reqCategoryList()
+*/
+
+// MessageBox 弹框
+// 引入MessageBox
+import {MessageBox,Message} from  'element-ui';
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$message = Message;//用来提示错误信息
+
 
 Vue.config.productionTip = false 
 
