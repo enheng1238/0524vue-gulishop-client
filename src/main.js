@@ -11,6 +11,12 @@ import {reqCategoryList} from '@/api'
 import store from '@/store'
 import '@/mock/mockServe' //运行mockServe文件 让mock可以注册为接口
 
+
+// 完整引入
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)  //use 代表在声明使用插件
+
 reqCategoryList()
 
 Vue.config.productionTip = false 

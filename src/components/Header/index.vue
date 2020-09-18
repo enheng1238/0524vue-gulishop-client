@@ -6,6 +6,9 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
+
+          <el-button type="primary" icon="el-icon-plus" size="mini" ></el-button>
+
           <p v-if="$store.state.user.userInfo.name">
             <!-- <router-link to="/login">登录</router-link> -->
             <a href="javascript:;">{{$store.state.user.userInfo.name}}</a>
