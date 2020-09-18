@@ -106,7 +106,9 @@
        pay() {
         this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', '请使用微信扫码支付', {
           dangerouslyUseHTMLString: true, //是否将 message 属性作为 HTML 片段处理
-          showCancelButton:true
+          showCancelButton:true,
+          cancelButtonText:'支付遇到问题',
+          confirmButtonText:'我已成功支付',
         });
       }
     },
