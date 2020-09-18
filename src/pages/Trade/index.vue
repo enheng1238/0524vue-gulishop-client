@@ -5,7 +5,8 @@
       <h5 class="receive">收件人信息</h5>
       <div class="address clearFix" v-for="(address,index) in userAddressList" :key= "address.id">
         <span class="username selected" :class="{selected:address.isDefault === '1'}">{{address.consignee}}</span>
-        <p>
+        <p @click="changeDefaultAddress(address)">
+          <!-- 排他  传过去总的数组和当前点击的是谁 -->
           <span class="s1">{{address.userAddress}}</span>
           <span class="s2">{{address.phoneNum}}</span>
           <span class="s3" v-if="address.isDefault === '1' ">默认地址</span>
@@ -79,9 +80,9 @@
       <div class="price">应付金额:　<span>¥{{tradeInfo.totalAmount}}</span></div>
       <div class="receiveInfo">
         寄送至:
-        <span>北京市昌平区宏福科技园综合楼6层</span>
-        收货人：<span>张三</span>
-        <span>15010658793</span>
+        <span>{{defaultAddress.userAddress}}</span>
+        收货人：<span>{{defaultAddress.consignee}}</span>
+        <span>{{defaultAddress.phoneNum}}</span>
       </div>
     </div>
     <div class="sub clearFix">
@@ -105,13 +106,22 @@ import { mapGetters, mapState } from 'vuex'
     methods: {
       getTradeInfo(){
         this.$store.dispatch('getTradeInfo')
+      },
+      // 点击切换默认地址
+      changeDefaultAddress(address){
+        this.userAddressList.forEach(item => item.isDefault = '0')
+        address.isDefault = '1'
       }
     },
     computed: {
       ...mapGetters(['detailArrayList','userAddressList']),
       ...mapState({
         tradeInfo:state => state.trade.tradeInfo
-      })
+      }),
+      defaultAddress(){
+        // find 找到符合条件的那一项 而且是第一项
+        return this.userAddressList.find(item => item.isDefault === '1')
+      }
     },
   }
 </script>
