@@ -4,7 +4,7 @@
     <div class="content">
       <h5 class="receive">收件人信息</h5>
       <div class="address clearFix" v-for="(address,index) in userAddressList" :key= "address.id">
-        <span class="username selected" :class="{selected:address.isDefault === '1'}">{{address.consignee}}</span>
+        <span class="username " :class="{selected:address.isDefault === '1'}">{{address.consignee}}</span>
         <p @click="changeDefaultAddress(address)">
           <!-- 排他  传过去总的数组和当前点击的是谁 -->
           <span class="s1">{{address.userAddress}}</span>
