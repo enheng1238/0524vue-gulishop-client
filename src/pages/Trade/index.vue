@@ -86,12 +86,24 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <!-- <router-link class="subBtn" to="/pay">提交订单</router-link> -->
+      <a href="javascript:;" @click="submitOrder"  class="subBtn" >提交订单</a>
     </div>
   </div>
 </template>
 
 <script>
+/**
+ * 1. 购物车页面   点击了结算直接跳转到订单交易页面
+ * 2. 跳转到订单交易页面   需要发请求 获取订单交易信息
+ *      订单的交易信息 
+ *          1.为了获取创建订单所用的交易编号
+ *          2.为了让用户去确定最终的交易信息
+ * 3.点击订单页面下边的提交订单
+ *      点击这个按钮不是立马就跳转到支付页面
+ *      先要根据交易信息和交易编号,发请求真正的去创建订单,返回订单编号之后再去跳转到支付页面
+ * 
+ */
 import { mapGetters, mapState } from 'vuex'
   export default {
     name: 'Trade',
@@ -111,6 +123,25 @@ import { mapGetters, mapState } from 'vuex'
       changeDefaultAddress(address){
         this.userAddressList.forEach(item => item.isDefault = '0')
         address.isDefault = '1'
+      },
+      // 点击提交订单,真正去发请求创建订单
+      async submitOrder(){
+        let tradeNo = this.tradeInfo.tradeNo;//订单交易页面请求时获取回来的交易信息包含了这个交易编号
+        let tradeInfo = {
+          consignee:this.defaultAddress.consignee,//创建订单所需要的用户名字
+          consigneeTel:this.defaultAddress.phoneNum,//手机号
+          deliveryAddress:this.defaultAddress.userAddress,//地址
+          paymentWay:"ONLINE",//支付方式
+          orderComment:this.message,//用户留言
+          orderDetailList:this.detailArrayList,//创建订单的购物车商品详情
+        };
+
+        // 把选定好的骄傲一信息和交易编号一起发请求真正的创建订单
+        const result = await this.$API.reqSubmitOrder(tradeNo,tradeInfo)
+        if(result.code === 200){
+          this.orderId = result.data   //orderId 订单编号
+          this.$router.push('/pay?orderId='+result.data)//把订单编号通过路由传参传过去
+        }
       }
     },
     computed: {
@@ -120,7 +151,7 @@ import { mapGetters, mapState } from 'vuex'
       }),
       defaultAddress(){
         // find 找到符合条件的那一项 而且是第一项
-        return this.userAddressList.find(item => item.isDefault === '1')
+        return this.userAddressList.find(item => item.isDefault === '1') || {}
       }
     },
   }

@@ -22,6 +22,7 @@ import pagination from '@/components/pagination'
 
 import "swiper/css/swiper.min.css";
 
+import * as API from '@/api'
 
 Vue.component('TypeNav',TypeNav);
 Vue.component('SliderLoop',SliderLoop);
@@ -31,7 +32,8 @@ Vue.component('pagination',pagination);
 new Vue({
   
   beforeCreate() {
-    Vue.prototype.$bus = this
+    Vue.prototype.$bus = this //vm
+    Vue.prototype.$API = API //vm
   },
   el:"#app",
   // render 渲染

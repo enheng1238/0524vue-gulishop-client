@@ -168,3 +168,14 @@ export const reqTradeInfo = () => {
         method:'get'
     })
 }
+
+// 请求提交订单(创建订单) 
+// /api/order/auth/submitOrder?tradeNo={tradeNo}/order/auth/submitOrder?tradeNo={tradeNo}
+// POST
+export const reqSubmitOrder = (tradeNo,tradeInfo) => {
+    return Ajax({
+        url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,
+        method:'post',
+        data:tradeInfo
+    })
+}
