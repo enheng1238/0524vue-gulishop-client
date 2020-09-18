@@ -25,8 +25,9 @@ Vue.use(ElementUI)  //use 代表在声明使用插件
 // 2.在babel.config.js当中配置插件
 // 3.引入需要使用的插件并注册
 
-import { Button } from 'element-ui';
+import { Button,Tag } from 'element-ui';
 Vue.use(Button)
+Vue.use(Tag)
 
 reqCategoryList()
 
