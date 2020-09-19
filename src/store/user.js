@@ -6,7 +6,7 @@ const state = {
     // 在state当中存储userTempId是为了效率更高一些，因为从localStorage获取比从state直接拿要慢
     // 我们只是在项目初始化的时候直接从localStorage获取一次，然后存给state，以后要用从state直接拿
     userTempId:getUserTempId(),
-    // 自动登录 就是把用户的信息给保存下来 
+    // 自动登录 就是把用户的信息给保存下来 下一次用户信息直接显示
     userInfo:JSON.parse(localStorage.getItem('USERINFO_KEY')) || {} ,
 }
 

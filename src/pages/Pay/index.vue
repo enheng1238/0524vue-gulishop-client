@@ -186,9 +186,20 @@ export default {
               // this 内部的this才是外部的this
               if(action === 'confirm'){
                   // 点击了确认按钮
-                  if(this.orderStatus !== 200){
-                      this.$message.info('请确保支付成功')
-                  }
+
+                // 后门
+                clearInterval(this.timer)
+                this.timer = null
+                this.$router.push('/paysuccess')
+                done()
+
+
+
+
+
+                  // if(this.orderStatus !== 200){
+                  //     this.$message.info('请确保支付成功')
+                  // }
               }else if(action === 'cancel'){
                   // 点击了取消按钮
                   this.$message.success('请联系尚硅谷前台小姐姐')
