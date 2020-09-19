@@ -106,6 +106,9 @@
               margin: 0 0 6px;
               border-bottom: 1px solid #ededed;
               text-align: center;
+              .router-link-active{
+                color: hotpink;
+              }
             }
           }
         }
