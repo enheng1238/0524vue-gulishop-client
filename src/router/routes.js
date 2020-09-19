@@ -9,13 +9,25 @@ import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
 import Center from '@/pages/Center'
+import MyOrder from '@/pages/Center/MyOrder'
+import GroupOrder from '@/pages/Center/GroupOrder'
+
 
 
 export default [ //存多个一般用数组 四个路由组件对应四个路由  /代表根路径
     {
         path:'/center',
         component: Center,        //注册路由组件
-      
+        children:[
+            {
+                path:'myorder',
+                component:MyOrder
+            },
+            {
+                path:'grouporder',
+                component:GroupOrder
+            }
+        ]
     },
     {
         path:'/trade',
