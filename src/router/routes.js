@@ -26,6 +26,10 @@ export default [ //存多个一般用数组 四个路由组件对应四个路由
             {
                 path:'grouporder',
                 component:GroupOrder
+            },
+            {
+                path:'',
+                redirect:'myorder'
             }
         ]
     },
