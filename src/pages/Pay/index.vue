@@ -182,6 +182,7 @@ export default {
             confirmButtonText: "我已成功支付", //确定按钮的文本内容
             showClose: true, //MessageBox 是否显示右上角关闭按钮
             center: true, //是否居中布局
+            // 5.
             beforeClose:(action, instance, done) => {
               // this 内部的this才是外部的this
               if(action === 'confirm'){
@@ -196,7 +197,7 @@ export default {
 
 
 
-
+                  // 真正的代码
                   // if(this.orderStatus !== 200){
                   //     this.$message.info('请确保支付成功')
                   // }
@@ -211,6 +212,7 @@ export default {
             // MessageBox 关闭前的回调，会暂停实例的关闭
           }
         )
+        // 4.
         // then内部传递的回调处理的是点击确认按钮的逻辑
          // catch内部传递的回调处理的是点击取消按钮的逻辑
         //  这两个逻辑无论点哪个按钮,最终都会强制的关闭我们的messageBox
