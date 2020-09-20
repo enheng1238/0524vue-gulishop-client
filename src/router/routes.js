@@ -11,6 +11,7 @@ import PaySuccess from '@/pages/PaySuccess'
 import Center from '@/pages/Center'
 import MyOrder from '@/pages/Center/MyOrder'
 import GroupOrder from '@/pages/Center/GroupOrder'
+import store from '@/store'
 
 
 
@@ -73,7 +74,15 @@ export default [ //存多个一般用数组 四个路由组件对应四个路由
         component:Login,
         meta:{
             isHide:true
-        }
+        },
+        // 84、只有没登录才能看到登录的界面 路由独享守卫和组件守卫
+        beforeEnter: (to, from, next) => {
+            if(store.state.user.userInfo.name){
+                next('/')
+            }else{
+                next()
+            }
+          }
         
     },
     {
