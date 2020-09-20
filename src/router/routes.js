@@ -39,7 +39,7 @@ export default [ //存多个一般用数组 四个路由组件对应四个路由
         component: Trade,        //注册路由组件
         // 86、只有从购物车界面才能跳转到交易页面（创建订单）
         beforeEnter: (to, from, next) => {
-            if(from.path === 'shopcart'){
+            if(from.path === '/shopcart'){
                 next()
             }else{
                 next(false)
@@ -50,11 +50,26 @@ export default [ //存多个一般用数组 四个路由组件对应四个路由
     {
         path: '/pay',
         component: Pay,        //注册路由组件
-
+        // 87.只有从交易页面（创建订单）页面才能跳转到支付页面
+        beforeEnter: (to, from, next) => {
+            if(from.path === '/trade'){
+                next()
+            }else{
+                next(false)
+            }
+          }
     },
     {
         path: '/paysuccess',
         component: PaySuccess,        //注册路由组件
+        // 88.只有从支付页面才能跳转到支付成功页面
+        beforeEnter: (to, from, next) => {
+            if(from.path === '/pay'){
+                next()
+            }else{
+                next(false)
+            }
+          }
 
     },
     {
