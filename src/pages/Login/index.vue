@@ -86,7 +86,17 @@
           try{
              const result = await this.$store.dispatch('userLogin',{mobile,password})
              alert('登录成功')
-             this.$router.push('/')
+
+            let redirect = this.$route.query.redirect
+            // 判断redirect 
+            if(redirect){
+              this.$router.push(redirect)
+            }else{
+              this.$router.push('/')
+            }
+
+
+             
           }catch(error){
             alert('登录失败'+error.message)
           }

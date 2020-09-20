@@ -62,6 +62,7 @@ router.beforeEach((to,from,next) => {
     if(store.state.user.userInfo.name){
       next()//登录了直接放行
     }else{
+      // 去到登录页 并且把本来想去的目标路径存起来  路由传参 以保证后面鞥路后可以去到之前想去的地方
       next('/login?redirect='+targetPath)//如果没登录去到/login
     }
   }else{
