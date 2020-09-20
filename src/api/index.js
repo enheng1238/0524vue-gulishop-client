@@ -204,3 +204,14 @@ export const reqOrderStatus = (orderId) => {
     })
    
 }
+
+// /api/order/auth/{page}/{limit}
+// GET
+// data {}
+// 请求获取我的订单分页列表
+export const reqMyOrderInfo = (page,limit) => {
+    return Ajax({
+        url:`/order/auth/${page}/${limit}`,
+        method:'get'
+    })
+}

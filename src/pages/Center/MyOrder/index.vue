@@ -215,7 +215,27 @@
 <script>
 export default {
   name: "MyOrder",
+  data() {
+    return {
+      // 用户初始化参数
+      page:1,
+      limit:3,
+      myOrderInfo:{}
+    }
+  },
+  mounted() {
+    this.getMyOrderInfo()
+  },
+  methods: {
+    async getMyOrderInfo(){
+      const result = await this.$API.reqMyOrderInfo(this.page,this.limit)
+      if(result.code === 200){
+        this.myOrderInfo = result.data
+      }
+    }
+  },
 };
+
 </script>
 
 <style lang="less" scoped>
