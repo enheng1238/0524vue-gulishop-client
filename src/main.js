@@ -35,10 +35,11 @@ reqCategoryList()
 
 // MessageBox 弹框
 // 引入MessageBox
-import {MessageBox,Message} from  'element-ui';
+import {MessageBox,Message,Pagination} from  'element-ui';
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$message = Message;//用来提示错误信息
+Vue.use(Pagination)
 
 
 Vue.config.productionTip = false 
@@ -54,7 +55,7 @@ import * as API from '@/api'
 
 Vue.component('TypeNav',TypeNav);
 Vue.component('SliderLoop',SliderLoop);
-Vue.component('pagination',pagination);
+// Vue.component('pagination',pagination);
 
 
 new Vue({

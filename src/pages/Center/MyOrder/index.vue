@@ -92,13 +92,31 @@
           使用自定义的通用的分页组件 
             @changePageNum="changePageNum"
         -->
-        <pagination 
+        <!-- <pagination 
         :currentPageNum="page"
         :total="myOrderInfo.total" 
         :pageSize="limit" 
         :continueNum="5"
         @changePageNum="getMyOrderInfo"
-        ></pagination>
+        ></pagination>-->
+
+        <!-- 使用element-ui的分页器
+           @size-change="handleSizeChange"
+           @current-change="handleCurrentChange"
+         -->
+        <el-pagination
+          background
+          :current-page="page"
+          :page-size="limit"
+          :total="myOrderInfo.total"
+          :pager-count="7"
+          @current-change="getMyOrderInfo"
+
+          @size-change="handleSizeChange"
+          :page-sizes="[3, 5, 7, 10]"
+
+          layout=" prev, pager, next, jumper,->,sizes,total"
+        ></el-pagination>
 
         <!-- <div class="pagination">
           <ul>
@@ -125,7 +143,7 @@
           <div>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;共2页&nbsp;</span>
           </div>
-        </div> -->
+        </div>-->
       </div>
     </div>
     <!--猜你喜欢-->
@@ -198,8 +216,8 @@ export default {
     this.getMyOrderInfo();
   },
   methods: {
-    async getMyOrderInfo(page=1) {
-      this.page = page//省区点击分页的一个回调
+    async getMyOrderInfo(page = 1) {
+      this.page = page; //省区点击分页的一个回调
       const result = await this.$API.reqMyOrderInfo(this.page, this.limit);
       if (result.code === 200) {
         this.myOrderInfo = result.data;
@@ -208,7 +226,12 @@ export default {
     // changePageNum(page){
     //   this.page = page;
     //   this.getMyOrderInfo()
-    // }
+    // },
+
+    handleSizeChange(pageSize){
+      this.limit = pageSize
+      this.getMyOrderInfo()
+    }
   },
   computed: {
     myOrderList() {
