@@ -37,7 +37,7 @@
             <tr v-for="(goods,index) in order.orderDetailList" :key="goods.id">
               <td width="60%">
                 <div class="typographic">
-                  <img :src="goods.imgUrl" style="width:100px;height:80px;"/>
+                  <img :src="goods.imgUrl" style="width:100px;height:80px;" />
                   <a href="#" class="block-text">{{goods.skuName}}</a>
                   <span>x{{goods.skuNum}}</span>
                   <a href="#" class="service">售后申请</a>
@@ -47,31 +47,56 @@
               <!-- 合并 -->
               <template v-if="index === 0">
                 <!-- template不是html标签,是一个组件标签,但是这个组件标签比较特殊,不会当作标签解析 -->
-              <td :rowspan="order.orderDetailList.length" width="8%" class="center">{{order.consignee}}</td>
-              <td :rowspan="order.orderDetailList.length"  width="13%" class="center">
-                <ul class="unstyled">
-                  <li>总金额¥{{order.totalAmount}}</li>
-                  <li>{{order.paymentWay === 'ONLINE'?'在线支付':'活到付款'}}</li>
-                </ul>
-              </td>
-              <td :rowspan="order.orderDetailList.length"  width="8%" class="center">
-                <a href="#" class="btn">{{order.orderStatusName}}</a>
-              </td>
-              <td :rowspan="order.orderDetailList.length"  width="13%" class="center">
-                <ul class="unstyled">
-                  <li>
-                    <a href="mycomment.html" target="_blank">评价|晒单</a>
-                  </li>
-                </ul>
-              </td>
+                <td
+                  :rowspan="order.orderDetailList.length"
+                  width="8%"
+                  class="center"
+                >{{order.consignee}}</td>
+                <td :rowspan="order.orderDetailList.length" width="13%" class="center">
+                  <ul class="unstyled">
+                    <li>总金额¥{{order.totalAmount}}</li>
+                    <li>{{order.paymentWay === 'ONLINE'?'在线支付':'活到付款'}}</li>
+                  </ul>
+                </td>
+                <td :rowspan="order.orderDetailList.length" width="8%" class="center">
+                  <a href="#" class="btn">{{order.orderStatusName}}</a>
+                </td>
+                <td :rowspan="order.orderDetailList.length" width="13%" class="center">
+                  <ul class="unstyled">
+                    <li>
+                      <a href="mycomment.html" target="_blank">评价|晒单</a>
+                    </li>
+                  </ul>
+                </td>
               </template>
             </tr>
-          
           </tbody>
         </table>
       </div>
+
+      <!-- 
+
+        currentPageNum: {
+      type: Number,
+      default: 1,
+    },
+    pageSize: Number,
+    total: Number,
+    continueNum: {
+      type: Number,
+      required: true,
+    },
+      -->
       <div class="choose-order">
-        <div class="pagination">
+        <pagination 
+        :currentPageNum="page"
+        :total="myOrderInfo.total" 
+        :pageSize="limit" 
+        :continueNum="5"
+        @changePageNum="changePageNum"
+        ></pagination>
+
+        <!-- <div class="pagination">
           <ul>
             <li class="prev disabled">
               <a href="javascript:">«上一页</a>
@@ -96,7 +121,7 @@
           <div>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;共2页&nbsp;</span>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!--猜你喜欢-->
@@ -160,29 +185,32 @@ export default {
   data() {
     return {
       // 用户初始化参数
-      page:1,
-      limit:3,
-      myOrderInfo:{}
-    }
+      page: 1,
+      limit: 3,
+      myOrderInfo: {},
+    };
   },
   mounted() {
-    this.getMyOrderInfo()
+    this.getMyOrderInfo();
   },
   methods: {
-    async getMyOrderInfo(){
-      const result = await this.$API.reqMyOrderInfo(this.page,this.limit)
-      if(result.code === 200){
-        this.myOrderInfo = result.data
+    async getMyOrderInfo() {
+      const result = await this.$API.reqMyOrderInfo(this.page, this.limit);
+      if (result.code === 200) {
+        this.myOrderInfo = result.data;
       }
+    },
+    changePageNum(page){
+      this.page = page;
+      this.getMyOrderInfo()
     }
   },
   computed: {
-    myOrderList(){
-      return this.myOrderInfo.records || []
-    }
+    myOrderList() {
+      return this.myOrderInfo.records || [];
+    },
   },
 };
-
 </script>
 
 <style lang="less" scoped>
