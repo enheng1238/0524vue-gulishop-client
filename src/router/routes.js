@@ -17,86 +17,105 @@ import store from '@/store'
 
 export default [ //存多个一般用数组 四个路由组件对应四个路由  /代表根路径
     {
-        path:'/center',
+        path: '/center',
         component: Center,        //注册路由组件
-        children:[
+        children: [
             {
-                path:'myorder',
-                component:MyOrder
+                path: 'myorder',
+                component: MyOrder
             },
             {
-                path:'grouporder',
-                component:GroupOrder
+                path: 'grouporder',
+                component: GroupOrder
             },
             {
-                path:'',
-                redirect:'myorder'
+                path: '',
+                redirect: 'myorder'
             }
         ]
     },
     {
-        path:'/trade',
+        path: '/trade',
         component: Trade,        //注册路由组件
-      
+        // 86、只有从购物车界面才能跳转到交易页面（创建订单）
+        beforeEnter: (to, from, next) => {
+            if(from.path === 'shopcart'){
+                next()
+            }else{
+                next(false)
+            }
+          }
+
     },
     {
-        path:'/pay',
+        path: '/pay',
         component: Pay,        //注册路由组件
-      
+
     },
     {
-        path:'/paysuccess',
+        path: '/paysuccess',
         component: PaySuccess,        //注册路由组件
-      
+
     },
     {
-        path:'/shopcart',
+        path: '/shopcart',
         component: ShopCart,        //注册路由组件
-      
+
     },
     {
-        path:'/addcartsuccess',
-        component: AddCartSuccess,        //注册路由组件
-      
+        path: '/addcartsuccess',
+        component: AddCartSuccess,
+        //注册路由组件
+        // 85、只有携带了skuNum和sessionStorage内部有skuInfo数据  才能看到添加购物车成功的界面
+        beforeEnter: (to, from, next) => {
+            let skuNum = to.query.skuNum
+            let skuInfo = sessionStorage.getItem('SKUINFO_KEY')
+            if(skuNum && skuInfo){
+              next()
+            }else{
+              next('/')
+            }
+          }
+
     },
     {
-        path:'/detail/:goodsId',
+        path: '/detail/:goodsId',
         component: Detail,        //注册路由组件
-      
+
     },
     {
-        path:'/home',
+        path: '/home',
         component: Home,        //注册路由组件
-      
+
     },
     {
-        path:'/login',
-        component:Login,
-        meta:{
-            isHide:true
+        path: '/login',
+        component: Login,
+        meta: {
+            isHide: true
         },
         // 84、只有没登录才能看到登录的界面 路由独享守卫和组件守卫
         beforeEnter: (to, from, next) => {
-            if(store.state.user.userInfo.name){
+            if (store.state.user.userInfo.name) {
                 next('/')
-            }else{
+            } else {
                 next()
             }
-          }
-        
-    },
-    {
-        path:'/register',
-        component:Register,
-        meta:{
-            isHide:true
         }
-        
+
     },
     {
-        path:'/search/:keyword?',//代表这个params参数可传可不传  /:代表接收后面的参数
-        name:'search',
-        component:Search,
+        path: '/register',
+        component: Register,
+        meta: {
+            isHide: true
+        }
+
+    },
+    {
+        path: '/search/:keyword?',//代表这个params参数可传可不传  /:代表接收后面的参数
+        name: 'search',
+        component: Search,
         /**
          * props:true
          * props这个属性用来配置传递参数的简便方式,就是把参数作为属性映射到组件当中
@@ -113,7 +132,7 @@ export default [ //存多个一般用数组 四个路由组件对应四个路由
          */
     },
     { //重定向路由
-        path:'/',
-        redirect:'/home'
+        path: '/',
+        redirect: '/home'
     }
 ]
