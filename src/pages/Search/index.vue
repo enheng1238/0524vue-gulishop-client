@@ -144,13 +144,13 @@
           4.连续页数 (根据当前页码不一样 连续页码的起始和结束不一样-->
 
           <!-- 父组件需要分页子组件传递的四个数据 -->
-          <pagination
+          <MyPagination
             :currentPageNum="searchParams.pageNo"
             :pageSize="searchParams.pageSize"
             :total="goodsListInfo.total"
             :continueNum="5"
             @changePageNum="changePageNum"
-          ></pagination>
+          ></MyPagination>
           <!-- 
 
             : 传递属性

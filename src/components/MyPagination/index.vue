@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: "Pagination",
+  name: "MyPagination",
   //   接收数据
   // props:['currentPageNum'] 1.数组写法 最简单 但是缺点没法制定数据类型
 

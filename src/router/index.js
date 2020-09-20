@@ -37,7 +37,7 @@ VueRouter.prototype.replace = function(location,onResolved,onRejected){
 
 
 const router = new VueRouter({
-  // mode:'history',
+  mode:'history',//上线 改成history模式 不用hash模式
   routes,
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
