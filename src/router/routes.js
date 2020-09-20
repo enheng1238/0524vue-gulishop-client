@@ -1,7 +1,13 @@
-import Home from '@/pages/Home'
+// import Home from '@/pages/Home'
+// import Search from '@/pages/Search'
+
+// 从组件对象变成函数了 动态加载 单独打包
+const Home = () => import('@/pages/Home')  //使用的时候单独打包成一个文件加载  
+const Search = () => import('@/pages/Search')
+
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
-import Search from '@/pages/Search'
+// import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
@@ -100,7 +106,8 @@ export default [ //存多个一般用数组 四个路由组件对应四个路由
     },
     {
         path: '/home',
-        component: Home,        //注册路由组件
+        component: Home,        //注册路由组件  
+        // 此时的Home是一个函数 当你要使用component对应的组件的时候,他会调用对应的Home函数
 
     },
     {
