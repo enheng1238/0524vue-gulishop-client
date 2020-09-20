@@ -43,23 +43,28 @@
                   <a href="#" class="service">售后申请</a>
                 </div>
               </td>
-              <td rowspan="2" width="8%" class="center">{{order.consignee}}</td>
-              <td rowspan="2" width="13%" class="center">
+
+              <!-- 合并 -->
+              <template v-if="index === 0">
+                <!-- template不是html标签,是一个组件标签,但是这个组件标签比较特殊,不会当作标签解析 -->
+              <td :rowspan="order.orderDetailList.length" width="8%" class="center">{{order.consignee}}</td>
+              <td :rowspan="order.orderDetailList.length"  width="13%" class="center">
                 <ul class="unstyled">
                   <li>总金额¥{{order.totalAmount}}</li>
                   <li>{{order.paymentWay === 'ONLINE'?'在线支付':'活到付款'}}</li>
                 </ul>
               </td>
-              <td rowspan="2" width="8%" class="center">
+              <td :rowspan="order.orderDetailList.length"  width="8%" class="center">
                 <a href="#" class="btn">{{order.orderStatusName}}</a>
               </td>
-              <td rowspan="2" width="13%" class="center">
+              <td :rowspan="order.orderDetailList.length"  width="13%" class="center">
                 <ul class="unstyled">
                   <li>
                     <a href="mycomment.html" target="_blank">评价|晒单</a>
                   </li>
                 </ul>
               </td>
+              </template>
             </tr>
           
           </tbody>
