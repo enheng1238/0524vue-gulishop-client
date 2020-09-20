@@ -33,7 +33,7 @@
         <span class="error-msg">错误提示信息</span>-->
       </div>
       <div class="content">
-         <label>验证码:</label>
+        <label>验证码:</label>
         <input
           v-model="code"
           name="code"
@@ -157,19 +157,24 @@ export default {
       this.$refs.code.src = "/api/user/passport/code";
     },
     async register() {
-      let { mobile, password, password2, code } = this;
-      if (mobile && password && password2 && code && password === password2) {
-        try {
-          await this.$store.dispatch("userRegister", {
-            mobile,
-            password,
-            code,
-          });
-          alert("恭喜注册成功,确认跳转到登录页");
-          this.$router.push("/login");
-        } catch (error) {
-          alert("用户注册失败" + error.message);
-        }
+      const success = await this.$validator.validateAll(); // 对所有表单项进行验证
+      if (success) {
+        //success为true 代表验证通过
+
+        let { mobile, password, password2, code } = this;
+        // if (mobile && password && password2 && code && password === password2) {
+          try {
+            await this.$store.dispatch("userRegister", {
+              mobile,
+              password,
+              code,
+            });
+            alert("恭喜注册成功,确认跳转到登录页");
+            this.$router.push("/login");
+          } catch (error) {
+            alert("用户注册失败" + error.message);
+          }
+        // }
       }
     },
   },
