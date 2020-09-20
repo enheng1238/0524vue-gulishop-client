@@ -88,12 +88,16 @@
     },
       -->
       <div class="choose-order">
+        <!-- 
+          使用自定义的通用的分页组件 
+            @changePageNum="changePageNum"
+        -->
         <pagination 
         :currentPageNum="page"
         :total="myOrderInfo.total" 
         :pageSize="limit" 
         :continueNum="5"
-        @changePageNum="changePageNum"
+        @changePageNum="getMyOrderInfo"
         ></pagination>
 
         <!-- <div class="pagination">
@@ -194,16 +198,17 @@ export default {
     this.getMyOrderInfo();
   },
   methods: {
-    async getMyOrderInfo() {
+    async getMyOrderInfo(page=1) {
+      this.page = page//省区点击分页的一个回调
       const result = await this.$API.reqMyOrderInfo(this.page, this.limit);
       if (result.code === 200) {
         this.myOrderInfo = result.data;
       }
     },
-    changePageNum(page){
-      this.page = page;
-      this.getMyOrderInfo()
-    }
+    // changePageNum(page){
+    //   this.page = page;
+    //   this.getMyOrderInfo()
+    // }
   },
   computed: {
     myOrderList() {
