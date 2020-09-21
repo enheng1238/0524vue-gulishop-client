@@ -35,11 +35,12 @@ reqCategoryList()
 
 // MessageBox 弹框
 // 引入MessageBox
-import {MessageBox,Message,Pagination} from  'element-ui';
+import {MessageBox,Message,Pagination,Button} from  'element-ui';
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$message = Message;//用来提示错误信息
 Vue.use(Pagination)
+Vue.use(Button)
 
 
 Vue.config.productionTip = false 
